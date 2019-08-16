@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.qianjipeng.top/about/index.html</loc>
+    <loc>http://www.qianjipeng.top/guestbook/index.html</loc>
     
-    <lastmod>2019-08-16T10:41:00.288Z</lastmod>
+    <lastmod>2019-08-16T13:07:07.087Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.qianjipeng.top/2019/08/16/hello-world/</loc>
     
-    <lastmod>2019-08-16T01:23:10.781Z</lastmod>
+    <lastmod>2019-08-16T13:01:28.959Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.qianjipeng.top/categories/index.html</loc>
+    
+    <lastmod>2019-08-16T10:56:27.576Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.qianjipeng.top/tags/index.html</loc>
+    
+    <lastmod>2019-08-16T10:55:48.924Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.qianjipeng.top/about/index.html</loc>
+    
+    <lastmod>2019-08-16T10:41:00.288Z</lastmod>
     
   </url>
   
