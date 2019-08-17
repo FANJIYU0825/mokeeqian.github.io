@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux,编码,shell,">
 
 
 
@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="Resume Qian Jipeng/Male/Post-90s BD/AHUT/IMIS Blog: https://mokeeqian.github.io Github: https://github.com/mokeeqian Email: &amp;#x6d;&amp;#111;&amp;#x6b;&amp;#101;&amp;#x65;&amp;#x71;&amp;#105;&amp;#x61;&amp;#x6e;&amp;#64;&amp;#x71;&amp;#113;&amp;#46;">
-<meta name="keywords" content="coding">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to my blog~">
-<meta property="og:url" content="http://www.qianjipeng.top/about/index.html">
+<meta name="description" content="今天在github上clone了一个master，想拿来练手，无奈是Windows下的编码，中文乱码，英文OK。于是想到之前看过一篇帖子，记录如下。  主要是用到了Linux的 iconv 命令  Step one　获取当前文件编码我当前文件是 Student.cpp 1file Student.cpp  得到输出如下： 1Student.cpp: C source, UTF-8 Unicode">
+<meta name="keywords" content="Linux,编码,shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统下文件乱码问题解决">
+<meta property="og:url" content="http://www.qianjipeng.top/2019/08/17/Linux系统下文件乱码问题解决-1/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="Resume Qian Jipeng/Male/Post-90s BD/AHUT/IMIS Blog: https://mokeeqian.github.io Github: https://github.com/mokeeqian Email: &amp;#x6d;&amp;#111;&amp;#x6b;&amp;#101;&amp;#x65;&amp;#x71;&amp;#105;&amp;#x61;&amp;#x6e;&amp;#64;&amp;#x71;&amp;#113;&amp;#46;">
+<meta property="og:description" content="今天在github上clone了一个master，想拿来练手，无奈是Windows下的编码，中文乱码，英文OK。于是想到之前看过一篇帖子，记录如下。  主要是用到了Linux的 iconv 命令  Step one　获取当前文件编码我当前文件是 Student.cpp 1file Student.cpp  得到输出如下： 1Student.cpp: C source, UTF-8 Unicode">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-16T10:41:00.288Z">
+<meta property="og:updated_time" content="2019-08-17T12:38:36.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to my blog~">
-<meta name="twitter:description" content="Resume Qian Jipeng/Male/Post-90s BD/AHUT/IMIS Blog: https://mokeeqian.github.io Github: https://github.com/mokeeqian Email: &amp;#x6d;&amp;#111;&amp;#x6b;&amp;#101;&amp;#x65;&amp;#x71;&amp;#105;&amp;#x61;&amp;#x6e;&amp;#64;&amp;#x71;&amp;#113;&amp;#46;">
+<meta name="twitter:title" content="Linux系统下文件乱码问题解决">
+<meta name="twitter:description" content="今天在github上clone了一个master，想拿来练手，无奈是Windows下的编码，中文乱码，英文OK。于是想到之前看过一篇帖子，记录如下。  主要是用到了Linux的 iconv 命令  Step one　获取当前文件编码我当前文件是 Student.cpp 1file Student.cpp  得到输出如下： 1Student.cpp: C source, UTF-8 Unicode">
 
 
 
@@ -148,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="http://www.qianjipeng.top/about/">
+  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/17/Linux系统下文件乱码问题解决-1/">
 
 
 
 
 
-  <title>Welcome to my blog~ | Mokeeqian's Blog</title>
+  <title>Linux系统下文件乱码问题解决 | Mokeeqian's Blog</title>
   
 
 
@@ -304,44 +304,248 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/17/Linux系统下文件乱码问题解决-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qian Jipeng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mokeeqian's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Welcome to my blog~</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h1 id="Resume"><a href="#Resume" class="headerlink" title="Resume"></a>Resume</h1><ul>
-<li>Qian Jipeng/Male/Post-90s</li>
-<li>BD/AHUT/IMIS</li>
-<li>Blog: <a href="https://mokeeqian.github.io" target="_blank" rel="noopener">https://mokeeqian.github.io</a></li>
-<li>Github: <a href="https://github.com/mokeeqian" target="_blank" rel="noopener">https://github.com/mokeeqian</a></li>
-<li>Email: <a href="mailto:&#x6d;&#111;&#x6b;&#101;&#x65;&#x71;&#105;&#x61;&#x6e;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;" target="_blank" rel="noopener">&#x6d;&#111;&#x6b;&#101;&#x65;&#x71;&#105;&#x61;&#x6e;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;</a></li>
-<li>Talk is cheep, show me your code</li>
-<li>Thank you</li>
+          <h1 class="post-title" itemprop="name headline">Linux系统下文件乱码问题解决</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+          
+            
+          
+          
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-17T20:28:45+08:00">
+                2019-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/utils/" itemprop="url" rel="index">
+                    <span itemprop="name">utils</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  277
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天在github上clone了一个master，想拿来练手，无奈是Windows下的编码，中文乱码，英文OK。于是想到之前看过一篇帖子，记录如下。</p>
+<ul>
+<li>主要是用到了Linux的 <a href="https://baike.baidu.com/item/iconv/524310" target="_blank" rel="noopener">iconv</a> 命令</li>
 </ul>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	one -&gt; eye(you);			<span class="comment">// 遇见你的第一眼</span></span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">	<span class="keyword">this</span> -&gt; realize(me);		<span class="comment">// 我就知道</span></span><br><span class="line">&#125; finaly &#123;</span><br><span class="line">	<span class="keyword">this</span> -&gt; love(you);		<span class="comment">// 我会爱上你 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Step-one-获取当前文件编码"><a href="#Step-one-获取当前文件编码" class="headerlink" title="Step one　获取当前文件编码"></a>Step one　获取当前文件编码</h2><p>我当前文件是 <em>Student.cpp</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file Student.cpp</span><br></pre></td></tr></table></figure>
 
+<p>得到输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.cpp: C <span class="built_in">source</span>, UTF-8 Unicode text</span><br></pre></td></tr></table></figure>
 
-        
-      </div>
-      
-      
+<p>是个万国码</p>
+<h2 id="Step-Two-获取本机编码"><a href="#Step-Two-获取本机编码" class="headerlink" title="Step Two 获取本机编码"></a>Step Two 获取本机编码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/sysconfig/i18n</span><br></pre></td></tr></table></figure>
+
+<p>不知道为什么我这里报错，没有这个文件???<br>不过Linux一般都是UTF-8</p>
+<h2 id="Step-Three-修改文件编码"><a href="#Step-Three-修改文件编码" class="headerlink" title="Step Three 修改文件编码"></a>Step Three 修改文件编码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iconv -f GBK -t UTF-8  Student.cpp -o  Student0.cpp</span><br></pre></td></tr></table></figure>
+
+<p>这里<em>Student.cpp</em>是原来的文件，<em>Student0.cpp</em>是我修改后的文件。</p>
+<p>改后打开文件就没有乱码问题了</p>
+<h3 id="这里有个问题，如果有多个文件不能在一起转化"><a href="#这里有个问题，如果有多个文件不能在一起转化" class="headerlink" title="这里有个问题，如果有多个文件不能在一起转化"></a>这里有个问题，如果有多个文件不能在一起转化</h3><p>比如我有两个文件，<em>Student.cpp</em> 和 <em>Student.h</em> 必须要执行两次命令，尴尬。<br>后来想起来可以用通配符，文件名不改变，即可</p>
+<ul>
+<li>注意： 通配符要慎用!</li>
+<li>最后的最后: 写了个小项目，放在了仓库中<a href="https://github.com/mokeeqian/demo-projects/tree/master/%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2" target="_blank" rel="noopener">编码转换</a></li>
+</ul>
+
       
     </div>
     
     
     
+    
+    
+    
+      <div>
+        
+<div style="text-align:center;color: #000000;font-size:16px;">
+    ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
+
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qian Jipeng
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://www.qianjipeng.top/2019/08/17/Linux系统下文件乱码问题解决-1/" title="Linux系统下文件乱码问题解决">http://www.qianjipeng.top/2019/08/17/Linux系统下文件乱码问题解决-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" <i class="fa fa-tag"> Linux</a>
+          
+            <a href="/tags/编码/" <i class="fa fa-tag"> 编码</a>
+          
+            <a href="/tags/shell/" <i class="fa fa-tag"> shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/17/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/17/数据结构之逆波兰式/" rel="prev" title="数据结构之逆波兰式">
+                数据结构之逆波兰式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -483,7 +687,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Resume"><span class="nav-number">1.</span> <span class="nav-text">Resume</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-one-获取当前文件编码"><span class="nav-number">1.</span> <span class="nav-text">Step one　获取当前文件编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-Two-获取本机编码"><span class="nav-number">2.</span> <span class="nav-text">Step Two 获取本机编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-Three-修改文件编码"><span class="nav-number">3.</span> <span class="nav-text">Step Three 修改文件编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里有个问题，如果有多个文件不能在一起转化"><span class="nav-number">3.1.</span> <span class="nav-text">这里有个问题，如果有多个文件不能在一起转化</span></a></li></ol></li></ol></div>
             
 
           </div>
