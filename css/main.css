@@ -1554,7 +1554,7 @@ pre .javascript .function {
 .posts-expand .post-tags a {
   display: inline-block;
   margin-right: 10px;
-  font-size: 13px;
+  font-size: 15px;
 }
 .post-nav {
   display: table;
@@ -1837,7 +1837,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #470dda;
+  background: #8edaff;
 }
 .links-of-blogroll {
   font-size: 13px;
