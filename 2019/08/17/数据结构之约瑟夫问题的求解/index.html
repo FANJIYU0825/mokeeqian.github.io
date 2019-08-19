@@ -549,7 +549,7 @@
     <div class="comments" id="comments">
       <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEyOC8yMjYzOQ=="></div>
     </div>
-
+    
 
   
 
@@ -891,6 +891,26 @@
 
 
 
+
+
+
+<!-- gitalk 评论系统 2019.8.19 -->
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'b90d1bb5626ae5225048',
+          clientSecret: '0852a6518db1d45be43d62ff3551b5ab6ac2b265',
+          repo: 'mokeeqian.github.io',
+          owner: 'mokeeqian',
+          admin: ['mokeeqian'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
 
