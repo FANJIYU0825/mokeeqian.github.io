@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.qianjipeng.top/about/index.html</loc>
+    
+    <lastmod>2019-08-19T09:19:41.782Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.qianjipeng.top/2019/08/17/hello-world/</loc>
     
     <lastmod>2019-08-17T13:25:13.656Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>http://www.qianjipeng.top/tags/index.html</loc>
     
     <lastmod>2019-08-16T10:55:48.924Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.qianjipeng.top/about/index.html</loc>
-    
-    <lastmod>2019-08-16T10:41:00.288Z</lastmod>
     
   </url>
   
