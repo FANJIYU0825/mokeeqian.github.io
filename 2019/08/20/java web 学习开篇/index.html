@@ -548,26 +548,6 @@
           
 
   
-	<div id="gitalk-container"></div>  
-
-
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<div id="gitalk-container"></div>
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-    var gitalk = new Gitalk({
-        clientID: '<%= theme.gitalk.clientID %>',
-        clientSecret: '<%= theme.gitalk.clientSecret %>',
-        id: window.location.pathname,
-        repo: '<%= theme.gitalk.repo %>',
-        owner: '<%= theme.gitalk.githubID %>',
-        admin: '<%= theme.gitalk.adminUser %>'
-    })
-    gitalk.render('gitalk-container')
-</script>
-
-
-<!--	  
 
 
 
@@ -704,7 +684,7 @@
       
 
     </div>
-  
+  </aside>
 
 
         
@@ -901,13 +881,8 @@
 
 <!-- gitalk 评论系统 2019.8.19 -->
 
-
-
-
-
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <!--<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script> -->
   <script type="text/javascript">
     const gitalk = new Gitalk({
       clientID: '',
@@ -916,8 +891,8 @@
       owner: 'mokeeqian',
       admin: ['hexo_blog_comments'],
       pagerDirection: 'last',
-      <!--id: md5(window.location.pathname), -->
-      location.pathname,
+      id: location.pathname,
+      createIssueManually: 'true',
       distractionFreeMode: 'true'
     })
     gitalk.render('gitalk-container')
