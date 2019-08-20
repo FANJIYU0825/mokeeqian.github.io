@@ -718,7 +718,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.3k</span>
+    <span title="Site words total count">4.2k</span>
   
 </div>
 
@@ -891,8 +891,8 @@
 
 <!-- gitalk 评论系统 2019.8.19 -->
 
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
   <script type="text/javascript">
     const gitalk = new Gitalk({
       clientID: '',
@@ -900,9 +900,10 @@
       repo: 'hexo-blog-comments',
       owner: 'mokeeqian',
       admin: ['mokeeqian'],
+      id: location.pathname,
       pagerDirection: 'last',
-      createIssueManually: 'true',
-      distractionFreeMode: 'true'
+      createIssueManually: 'false',
+      distractionFreeMode: 'false'
     })
     gitalk.render('gitalk-container')
   </script>
