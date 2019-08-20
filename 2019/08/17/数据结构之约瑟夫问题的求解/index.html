@@ -550,6 +550,20 @@
 
 
 
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<div id="gitalk-container"></div>
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '<%= theme.gitalk.clientID %>',
+        clientSecret: '<%= theme.gitalk.clientSecret %>',
+        id: window.location.pathname,
+        repo: '<%= theme.gitalk.repo %>',
+        owner: '<%= theme.gitalk.githubID %>',
+        admin: '<%= theme.gitalk.adminUser %>'
+    })
+    gitalk.render('gitalk-container')
+</script>
 
 
 <!--	  
@@ -712,7 +726,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.2k</span>
+    <span title="Site words total count">4.3k</span>
   
 </div>
 
@@ -900,21 +914,18 @@
 
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-+ <script src="/js/src/md5.min.js"></script>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: 'b90d1bb5626ae5225048',
-      clientSecret: '0852a6518db1d45be43d62ff3551b5ab6ac2b265',
-      repo: 'hexo_blog_comments',
-      owner: 'mokeeqian',
-      admin: ['['仓库名','仓库名']'],
--     id: location.pathname,
-+     id: md5(location.pathname),
-      distractionFreeMode: 'true'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'b90d1bb5626ae5225048',
+          clientSecret: '0852a6518db1d45be43d62ff3551b5ab6ac2b265',
+          repo: 'hexo_blog_comments',
+          owner: 'mokeeqian',
+          admin: ['['仓库名','仓库名']'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
 
