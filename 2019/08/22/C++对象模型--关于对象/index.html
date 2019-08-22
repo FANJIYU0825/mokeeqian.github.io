@@ -115,10 +115,15 @@
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
 <meta property="og:description" content="写在前面为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-22T10:37:16.447Z">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482837/hexo/0822_3_muhhsi.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482844/hexo/0822_2_jibhqp.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482845/hexo/0822_1_fniz8u.jpg">
+<meta property="og:updated_time" content="2019-08-22T14:11:07.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++对象模型--关于对象">
 <meta name="twitter:description" content="写在前面为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一">
+<meta name="twitter:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg">
 
 
 
@@ -464,11 +469,11 @@
 </ol>
 <p>我创建了一个Point的对象，那么这个对象point的data member和funtion member是怎么布局呢?</p>
 <ul>
-<li><strong>简单对象模型</strong><br>这个模型是简单的一个模型，每个对象抽象成一些列的slots，每个slot对应一个成员，这样一来实现了member的对号入座。这样简化了编译器的设计复杂度，但是牺牲了效率和空间。<br>在这个模型下，<strong>members本身不在object中，而是指向members的指针存放在object中</strong>，避免了*”members有不同的数据类型，因而需要不同的储存空间”<em>。<br>如此，object中的member便是通过slots的索引值来索引的。<br>但是这个模型并**</em>没有***被C++所采用，不过这个观念被应用到了指向成员的指针(pointer-to-member)这一概念之中。</li>
-<li><strong>表格驱动摸模型</strong><br>这个模型是把members划分为两类，datas放在data member table中，functions放在member function table中，object本身含有指向这两个表格的指针。data member table直接指向data本身，function member table是一系列的slots，每个slots指出一个member function。<br>很遗憾，这个模型也<strong><em>没有</em></strong>被采用。但是member funciton table这一观念却支持了virtual function的机制。</li>
-<li><strong>C++对象模型</strong><br>这是Stroustrup设计C++时采用的模型。在这个模型之下，所有的non-static members都被置于每一个class object之中，static data members则被存放在这个class中(原书说法是<del>存放在个别的class object之外</del>)，static和non-static function members也被存放在个别的class object之外。而virtual functions分两步处理:<ul>
+<li><strong>简单对象模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg" alt="简单对象模型"><br>这个模型是简单的一个模型，每个对象抽象成一些列的slots，每个slot对应一个成员，这样一来实现了member的对号入座。这样简化了编译器的设计复杂度，但是牺牲了效率和空间。<br>在这个模型下，<strong>members本身不在object中，而是指向members的指针存放在object中</strong>，避免了*”members有不同的数据类型，因而需要不同的储存空间”<em>。<br>如此，object中的member便是通过slots的索引值来索引的。<br>但是这个模型并**</em>没有***被C++所采用，不过这个观念被应用到了指向成员的指针(pointer-to-member)这一概念之中。</li>
+<li><strong>表格驱动摸模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482837/hexo/0822_3_muhhsi.jpg" alt="表格驱动模型"><br>这个模型是把members划分为两类，datas放在data member table中，functions放在member function table中，object本身含有指向这两个表格的指针。data member table直接指向data本身，function member table是一系列的slots，每个slots指出一个member function。<br>很遗憾，这个模型也<strong><em>没有</em></strong>被采用。但是member funciton table这一观念却支持了virtual function的机制。</li>
+<li><strong>C++对象模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482844/hexo/0822_2_jibhqp.jpg" alt="C++对象模型"><br>这是Stroustrup设计C++时采用的模型。在这个模型之下，所有的non-static members都被置于每一个class object之中，static data members则被存放在这个class中(原书说法是<del>存放在个别的class object之外</del>)，static和non-static function members也被存放在个别的class object之外。而virtual functions分两步处理:<ul>
 <li>每一个class都会产生一系列指向virtual functions的指针，这些指针存放在一个叫<strong><em>virtual table</em></strong>(vtbl)的表格之中</li>
-<li>每一个class object都会被”安排”一个指向这个class的<strong><em>vtbl</em></strong>的指针(<strong><em>vptr</em></strong>)，vptr的设置和重置由类的构造函数、拷贝构造函数、析构函数完成。(这里先不讨论)<br>每个class还会关联一个<strong><em>type info object</em></strong>,由vtbl指出来，通常放在vtbl的第一个slots的位置(虚函数的实现机制)。</li>
+<li>每一个class object都会被”安排”一个指向这个class的<strong><em>vtbl</em></strong>的指针(<strong><em>vptr</em></strong>)，vptr的设置和重置由类的构造函数、拷贝构造函数、析构函数完成。(这里先不讨论)<br>每个class还会关联一个<strong><em>type info object</em></strong>,由vtbl指出来，通常放在vtbl的第一个slots的位置(<img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482845/hexo/0822_1_fniz8u.jpg" alt="虚函数的实现机制">)。</li>
 </ul>
 </li>
 </ul>
@@ -773,7 +778,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6.6k</span>
+    <span title="Site words total count">6.7k</span>
   
 </div>
 
