@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="hexo,评论,">
+  <meta name="keywords" content="web,servlet,">
 
 
 
@@ -107,21 +107,24 @@
 
 
 
-<meta name="description" content="之前用的一直是来比力，不知为何加载很慢，而且社区版没有邮件登录的选项，比较不方便，于是乎，改成了gitalk，基于github issue的评论插件。原理是，创建一个用来存放comment的repo，将所有的comment都放在特定的issue下。 写在前面官方repo 创建OAuth application创建一个github OAuth application，点击这里，点进去如下：  App">
-<meta name="keywords" content="hexo,评论">
+<meta name="description" content="接上篇，学习servlet基础。 servlet是什么java servlet是运行在web服务器上的应用程序，实现动态页面的创建，作为来自web浏览器和其他http客户端请求和http服务器上的数据库或者应用程序之间的中间层。　　　　　　　　　　　　　　　　　　　　http请求和响应过程 servlet架构 架构 tomcat与servlet   这里可以知道，tomcat将浏览器发过来的htt">
+<meta name="keywords" content="web,servlet">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo配置gitalk评论插件">
-<meta property="og:url" content="http://www.qianjipeng.top/2019/08/20/hexo配置gitalk评论插件/index.html">
+<meta property="og:title" content="java web servlet学习">
+<meta property="og:url" content="http://www.qianjipeng.top/2019/08/22/servlet学习/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="之前用的一直是来比力，不知为何加载很慢，而且社区版没有邮件登录的选项，比较不方便，于是乎，改成了gitalk，基于github issue的评论插件。原理是，创建一个用来存放comment的repo，将所有的comment都放在特定的issue下。 写在前面官方repo 创建OAuth application创建一个github OAuth application，点击这里，点进去如下：  App">
+<meta property="og:description" content="接上篇，学习servlet基础。 servlet是什么java servlet是运行在web服务器上的应用程序，实现动态页面的创建，作为来自web浏览器和其他http客户端请求和http服务器上的数据库或者应用程序之间的中间层。　　　　　　　　　　　　　　　　　　　　http请求和响应过程 servlet架构 架构 tomcat与servlet   这里可以知道，tomcat将浏览器发过来的htt">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566481819/hexo/1_px6klt.png">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566481823/hexo/2_oppyfh.png">
-<meta property="og:updated_time" content="2019-08-22T13:52:26.280Z">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566486478/hexo/874710-20170214192940050-671180063_dpxpnk.png">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566486469/hexo/874710-20170214204632894-1786729693_hjhji5.png">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566520802/hexo/11_bb7cxt.png">
+<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566521046/hexo/22_jborni.png">
+<meta property="og:updated_time" content="2019-08-23T00:57:25.328Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo配置gitalk评论插件">
-<meta name="twitter:description" content="之前用的一直是来比力，不知为何加载很慢，而且社区版没有邮件登录的选项，比较不方便，于是乎，改成了gitalk，基于github issue的评论插件。原理是，创建一个用来存放comment的repo，将所有的comment都放在特定的issue下。 写在前面官方repo 创建OAuth application创建一个github OAuth application，点击这里，点进去如下：  App">
-<meta name="twitter:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566481819/hexo/1_px6klt.png">
+<meta name="twitter:title" content="java web servlet学习">
+<meta name="twitter:description" content="接上篇，学习servlet基础。 servlet是什么java servlet是运行在web服务器上的应用程序，实现动态页面的创建，作为来自web浏览器和其他http客户端请求和http服务器上的数据库或者应用程序之间的中间层。　　　　　　　　　　　　　　　　　　　　http请求和响应过程 servlet架构 架构 tomcat与servlet   这里可以知道，tomcat将浏览器发过来的htt">
+<meta name="twitter:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566486478/hexo/874710-20170214192940050-671180063_dpxpnk.png">
 
 
 
@@ -151,13 +154,13 @@
 
 
 
-  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/20/hexo配置gitalk评论插件/">
+  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/22/servlet学习/">
 
 
 
 
 
-  <title>hexo配置gitalk评论插件 | Mokeeqian's Blog</title>
+  <title>java web servlet学习 | Mokeeqian's Blog</title>
   
 
 
@@ -335,7 +338,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/20/hexo配置gitalk评论插件/">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/22/servlet学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qian Jipeng">
@@ -352,7 +355,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hexo配置gitalk评论插件</h1>
+          <h1 class="post-title" itemprop="name headline">java web servlet学习</h1>
         
 
         <div class="post-meta">
@@ -368,8 +371,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-20T21:13:05+08:00">
-                2019-08-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-22T22:44:37+08:00">
+                2019-08-22
               </time>
             
 
@@ -391,8 +394,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/blog/" itemprop="url" rel="index">
-                    <span itemprop="name">blog</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -422,7 +425,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  821
+                  810
                 </span>
               
 
@@ -447,73 +450,44 @@
       
 
       
-        <p>之前用的一直是来比力，不知为何加载很慢，而且社区版没有邮件登录的选项，比较不方便，于是乎，改成了gitalk，基于github issue的评论插件。<br>原理是，创建一个用来存放comment的repo，将所有的comment都放在特定的issue下。</p>
-<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p><a href="https://github.com/gitalk/gitalk" target="_blank" rel="noopener">官方repo</a></p>
-<h1 id="创建OAuth-application"><a href="#创建OAuth-application" class="headerlink" title="创建OAuth application"></a>创建OAuth application</h1><p>创建一个github OAuth application，<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">点击这里</a>，点进去如下：<br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566481819/hexo/1_px6klt.png" alt="图片1"></p>
-<ul>
-<li>Application name: 随便写</li>
-<li>Homepage url: 写你的博客主页url</li>
-<li>Application description: 应用的描述</li>
-<li>Authorization callback url: 回调url，写你的博客url <del>如果你有自己的custom domain，写自己的域名</del></li>
+        <p>接上篇，学习servlet基础。</p>
+<h2 id="servlet是什么"><a href="#servlet是什么" class="headerlink" title="servlet是什么"></a>servlet是什么</h2><p>java servlet是运行在web服务器上的应用程序，实现动态页面的创建，作为来自web浏览器和其他http客户端请求和http服务器上的数据库或者应用程序之间的<strong>中间层</strong>。<br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566486478/hexo/874710-20170214192940050-671180063_dpxpnk.png" alt="http请求和响应"><br>　　　　　　　　　　　　　　　　　　　　http请求和响应过程</p>
+<h2 id="servlet架构"><a href="#servlet架构" class="headerlink" title="servlet架构"></a>servlet架构</h2><ul>
+<li>架构<br><img src="https://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg" alt="架构"></li>
+<li>tomcat与servlet<br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566486469/hexo/874710-20170214204632894-1786729693_hjhji5.png" alt="tomcat">  <ul>
+<li>这里可以知道，tomcat将浏览器发过来的http请求(http request)文本接收并解析，封装成httpServlet类型的request对象</li>
+<li>tomcat服务器同时将要响应的信息封装成httpResponse类型的response对象，通过设置response的相关属性就可以控制输出到浏览器的内容，再将response交给tomcat，tomcat就会将其转换成要响应的文本格式返回给浏览器</li>
 </ul>
-<h1 id="创建一个github-repo"><a href="#创建一个github-repo" class="headerlink" title="创建一个github repo"></a>创建一个github repo</h1><p>这个很简单，一个空的public的repo就行，先创在这。<br><del>私有仓库不知道行不行，貌似更加隐私</del></p>
-<h1 id="配置hexo配置文件"><a href="#配置hexo配置文件" class="headerlink" title="配置hexo配置文件"></a>配置hexo配置文件</h1><p><em>以next主题为例，其他主题可能有所差别</em></p>
-<ol>
-<li><p>新建<em>gittalk.swig</em>文件</p>
-<ul>
-<li>路径: <strong>themes/next/layout/_third-party/comments/</strong></li>
-<li>文件内容:</li>
-</ul>
-<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">   <span class="comment">&lt;!-- gitalk 评论系统 2019.8.19 --&gt;</span></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> page.comments &amp;&amp; theme.gitalk.enable %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span></span><br><span class="line"><span class="xml">	const gitalk = new Gitalk(&#123;</span></span><br><span class="line"><span class="xml">	  clientID: '</span><span class="template-variable">&#123;&#123;theme.gitalk.clientID&#125;&#125;</span><span class="xml">',</span></span><br><span class="line"><span class="xml">	  clientSecret: '</span><span class="template-variable">&#123;&#123;theme.gitalk.clientSecret&#125;&#125;</span><span class="xml">',</span></span><br><span class="line"><span class="xml">	  repo: '</span><span class="template-variable">&#123;&#123;theme.gitalk.repo&#125;&#125;</span><span class="xml">',</span></span><br><span class="line"><span class="xml">	  owner: '</span><span class="template-variable">&#123;&#123;theme.gitalk.githubID&#125;&#125;</span><span class="xml">',</span></span><br><span class="line"><span class="xml">	  admin: ['</span><span class="template-variable">&#123;&#123;theme.gitalk.adminUser&#125;&#125;</span><span class="xml">'],	// 注意使用列表</span></span><br><span class="line"><span class="xml">	  id: location.pathname, // 依据官方readme,这里可能会有bug, post lable长度超过50会有报错</span></span><br><span class="line"><span class="xml">	&#125;)</span></span><br><span class="line"><span class="xml">	gitalk.render('gitalk-container')</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
-
-
 </li>
-</ol>
-<ol start="2">
-<li><p>修改<em>index.swig</em>文件</p>
+</ul>
+<h2 id="servlet任务"><a href="#servlet任务" class="headerlink" title="servlet任务"></a>servlet任务</h2><ul>
+<li>读取客户端发送的显式数据，包括html表单，或者是applet或者用户定义程序的表单</li>
+<li>读取客户端发送的隐式http请求，包括cookies等</li>
+<li>处理数据并获得结果，可能会访问数据库调用web服务</li>
+<li>发送显式的数据到客户端，可能是文档、图片等</li>
+<li>发送隐式的http响应到客户端  </li>
+</ul>
+<h2 id="java-servlet包"><a href="#java-servlet包" class="headerlink" title="java servlet包"></a>java servlet包</h2><p>java servlet是运行在带有servlet解释器的web服务器(我用的是tomcat)上的java类。<br>通常需要<code>import javax.servlet.*</code>来导入包。<br>java servlet API 是servlet容器(tomcat为例)和servlet之间的接口，定义了各种servlet方法，和一些对象，其中主要是servletRequest和servletResponse对象比较重要。  </p>
+<h2 id="编写servlet"><a href="#编写servlet" class="headerlink" title="编写servlet"></a>编写servlet</h2><p>编写servlet有两种方法：</p>
 <ul>
-<li>路径: <strong>themes/next/layout/_third-party/comments/</strong></li>
-<li>修改内容:<br>在文件最后一行追加下列语句:</li>
+<li>直接编写servlet类，实现相应的方法<br>这个方法需要编写完整的java类，比较复杂，而且容易出错。故我们采用第二种方法。</li>
+<li>用IDE(我的是idea)新建myServlet<br>新建myServlet，默认会实现doGet()和doPost()方法，也可以根据自己的需要，实现其他方法，诸如：init()、service()、destory()  </li>
 </ul>
-<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">include</span></span> 'gitalk.swig' %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<ol start="3">
-<li><p>修改<em>comment.swig</em>文件</p>
+<p>另外，要实现与jsp的交互，必须要配置<strong>web.xml</strong>文件，写入servlet、servlet-mapping等标签，除此之外，<strong>也可以在servlet类的添加注释(annoation)</strong>，例如：　<code>@WebServlet(urlPatterns = &quot;/signin&quot;, name = &quot;signin&quot;)</code>，这样就可以不用配置<strong>web.xml</strong>文件</p>
+<h2 id="详解servlet原理"><a href="#详解servlet原理" class="headerlink" title="详解servlet原理"></a>详解servlet原理</h2><p><strong>1. servlet生命周期</strong>  </p>
 <ul>
-<li>路径: <strong>/themes/next/layout/_partials/</strong></li>
-<li>修改内容:</li>
+<li>servlet的生命周期始于servlet服务器启动时或者第一次请求该servlet，此时调用init()方法，初始化出一个servlet对象</li>
+<li>servlet处理所有的客户端请求，执行service()方法</li>
+<li>服务器关闭，执行destory()方法，servlet被销毁</li>
 </ul>
-<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"> </span><span class="template-tag">&#123;% <span class="name">elseif</span> theme.valine.appid and theme.valine.appkey %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comments"</span> <span class="attr">id</span>=<span class="string">"comments"</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span>		// 在这一行的下一行开始加</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"> </span><span class="template-tag">&#123;% <span class="name">elseif</span> theme.gitalk.enable %&#125;</span><span class="xml">			// 加入以下三行</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comments"</span> <span class="attr">id</span>=<span class="string">"comments"</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"gitalk-container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"> </span><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<ol start="4">
-<li><p>修改主题配置文件<em>_config.yml</em></p>
-<ol>
-<li>文件路径: <strong>/themes/</strong></li>
-<li>修改内容:</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">#gitalk评论</span></span><br><span class="line"><span class="attr">gitalk:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  githubID:</span> <span class="string">github用户名</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">用来存放comment的repo</span></span><br><span class="line"><span class="attr">  clientID:</span> <span class="string">你的clientID</span></span><br><span class="line"><span class="attr">  clientSecret:</span> <span class="string">你的clientSecret</span></span><br><span class="line"><span class="attr">  adminUser:</span> <span class="string">admin用户，只有admin才可以init</span> <span class="string">issue</span></span><br><span class="line"><span class="attr">  perPage:</span> <span class="number">15</span></span><br><span class="line"><span class="attr">  pagerDirection:</span> <span class="string">last</span></span><br><span class="line"><span class="attr">  createIssueManually:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  distractionFreeMode:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p><code>hexo clean</code></p>
-<p><code>hexo g</code></p>
-<p><code>hexo d</code></p>
-<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><p><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566481823/hexo/2_oppyfh.png" alt="图片2"></p>
-<h1 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h1><ul>
-<li><em>comment.swig</em>文件配置错误，注意所加代码的位置</li>
-<li><em>OAuth application</em>创建有错误，按以上做法即可</li>
-<li>粗心、大小写、配置文件写错</li>
-</ul>
-<h1 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h1><p>不知道为什么在hexo中markdown会解析奇怪的东西，比如说我写了`&lt;!–￼4–&gt;`这个东西，在<code>hexo g</code>的过程中，会报错，很奇怪的错误。<br>后来把这个post删除了，再生成就没有问题了，所以说，可以确定这个问题是出在我刚刚写的<code>.md</code>文件内容导致的。</p>
-<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><ul>
-<li>删除所有代码块，错误消失，还原所有内容</li>
-<li>删除`&lt;!–￼5–&gt;`这个内容，错误消失<br>至此，可以知道，问题就出在`&lt;!–￼6–&gt;`这段内容里，后来改成```包含的代码块就没有问题。<br>所以说，遇到<code>\{\%</code>这样的字符需要转义，否则会被md解析。<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2>这里还要深入了解一下md的解析原理</li>
+<p><strong>2. servlet的service()方法</strong><br>这里有个问题，我们在编写servlet时，只写了doPost()和doGet()方法，并没有写service()方法，那么servlet是如何执行service()方法的呢？<br>public的service()方法，这是对外的公有方法，这里做了一个ServletRequest到httpServletRequest的转型<br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566520802/hexo/11_bb7cxt.png" alt></p>
+<p>内部的protected的方法，根据请求的方法<strong>method</strong>不同，调用不同的响应方式：<br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566521046/hexo/22_jborni.png" alt></p>
+<p>也就是说，service()方法一般情况下我们是不需要重写的，它已经包括的所有的推理机，我们只要重写相应需要的方法就行了，比如说doPost()、doGet()，这也是idea默认给我们重写的两个方法。<br><strong>3. servlet重要的对象</strong><br>servlet为我们创建了几个内置对象：</p>
+<ul>
+<li>servletCopnfig</li>
+<li>servletContext</li>
+<li>httpServletRequest</li>
+<li>httpServletResponse</li>
 </ul>
 
       
@@ -546,7 +520,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://www.qianjipeng.top/2019/08/20/hexo配置gitalk评论插件/" title="hexo配置gitalk评论插件">http://www.qianjipeng.top/2019/08/20/hexo配置gitalk评论插件/</a>
+    <a href="http://www.qianjipeng.top/2019/08/22/servlet学习/" title="java web servlet学习">http://www.qianjipeng.top/2019/08/22/servlet学习/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -561,9 +535,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" <i class="fa fa-tag"> hexo</a>
+            <a href="/tags/web/" <i class="fa fa-tag"> web</a>
           
-            <a href="/tags/评论/" <i class="fa fa-tag"> 评论</a>
+            <a href="/tags/servlet/" <i class="fa fa-tag"> servlet</a>
           
         </div>
       
@@ -576,8 +550,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/20/java web 学习开篇/" rel="next" title="java web 学习开篇">
-                <i class="fa fa-chevron-left"></i> java web 学习开篇
+              <a href="/2019/08/22/C++对象模型--关于对象/" rel="next" title="C++对象模型--关于对象">
+                <i class="fa fa-chevron-left"></i> C++对象模型--关于对象
               </a>
             
           </div>
@@ -585,10 +559,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/22/C++对象模型--关于对象/" rel="prev" title="C++对象模型--关于对象">
-                C++对象模型--关于对象 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -747,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建OAuth-application"><span class="nav-number">2.</span> <span class="nav-text">创建OAuth application</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建一个github-repo"><span class="nav-number">3.</span> <span class="nav-text">创建一个github repo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置hexo配置文件"><span class="nav-number">4.</span> <span class="nav-text">配置hexo配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#最终结果"><span class="nav-number">5.1.</span> <span class="nav-text">最终结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#踩过的坑"><span class="nav-number">6.</span> <span class="nav-text">踩过的坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在后面"><span class="nav-number">7.</span> <span class="nav-text">写在后面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决步骤"><span class="nav-number">7.1.</span> <span class="nav-text">解决步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">7.2.</span> <span class="nav-text">TODO</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet是什么"><span class="nav-number">1.</span> <span class="nav-text">servlet是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet架构"><span class="nav-number">2.</span> <span class="nav-text">servlet架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet任务"><span class="nav-number">3.</span> <span class="nav-text">servlet任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-servlet包"><span class="nav-number">4.</span> <span class="nav-text">java servlet包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写servlet"><span class="nav-number">5.</span> <span class="nav-text">编写servlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详解servlet原理"><span class="nav-number">6.</span> <span class="nav-text">详解servlet原理</span></a></li></ol></div>
             
 
           </div>
