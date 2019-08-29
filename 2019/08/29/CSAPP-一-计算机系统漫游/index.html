@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="计算机系统,计算机入门,">
+  <meta name="keywords" content="计算机系统,动态链接,静态链接,编译系统,">
 
 
 
@@ -108,14 +108,14 @@
 
 
 <meta name="description" content="计算机系统学习狂补知识ing…   计算机系统计算机系统是由计算机硬件和系统软件组成的，它们共同工作来与进行应用程序。接下来，我会以hello.c为例，进行一些零散的总结。 12345#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;	printf(&quot;Hello World!\n&quot;);    return 0;&amp;#125;  信息信息就是位+上下文，我们的hello">
-<meta name="keywords" content="计算机系统,计算机入门">
+<meta name="keywords" content="计算机系统,动态链接,静态链接,编译系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSAPP(一)--计算机系统漫游">
 <meta property="og:url" content="http://www.qianjipeng.top/2019/08/29/CSAPP-一-计算机系统漫游/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
 <meta property="og:description" content="计算机系统学习狂补知识ing…   计算机系统计算机系统是由计算机硬件和系统软件组成的，它们共同工作来与进行应用程序。接下来，我会以hello.c为例，进行一些零散的总结。 12345#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;	printf(&quot;Hello World!\n&quot;);    return 0;&amp;#125;  信息信息就是位+上下文，我们的hello">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-29T06:52:49.033Z">
+<meta property="og:updated_time" content="2019-08-29T15:20:28.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP(一)--计算机系统漫游">
 <meta name="twitter:description" content="计算机系统学习狂补知识ing…   计算机系统计算机系统是由计算机硬件和系统软件组成的，它们共同工作来与进行应用程序。接下来，我会以hello.c为例，进行一些零散的总结。 12345#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;	printf(&quot;Hello World!\n&quot;);    return 0;&amp;#125;  信息信息就是位+上下文，我们的hello">
@@ -429,7 +429,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  908
+                  1.3k
                 </span>
               
 
@@ -469,15 +469,16 @@
 <p>相应的，一个程序的编译过程，也分为四个阶段：</p>
 <ul>
 <li>预处理阶段<br>预处理器会扫描源文件，定位到以”#”开头的内容，根据这个内容，修改源文件的内容，比如说前面<code>#include &lt;stdio.h&gt;</code>，这时候，我就要找到stdio.h这个头文件，把这个头文件的内容直接插入到hello.c源文件中(至于具体在哪个位置，我们不知道)<br>，生成新的源文件<strong>hello.i</strong>，通常以<strong>.i</strong>作为文件扩展名。</li>
-<li>编译阶段<br>编译器会将文本文件hello.i翻译成文本文件hello.s，它包含了一个汇编语言程序，。即将高级语言翻译成汇编语言。的汇编程序可以为不同的高级语言和不同的编译器提供通用的输出语言。</li>
-<li>汇编阶段<br>汇编器将汇编语言翻译成机器语言指令，把这些指令打包成一种叫做<strong>可重定位目标程序</strong>的格式，将结果放在<strong>hello.o</strong>这个二进制文件中。</li>
-<li>链接阶段<br>我们的hell.o调用了stdio的printf()函数，它是C语言的一个标准库函数，位于printf.o这个独立的预编译好了的目标文件中，必须要加入我们的hello.o文件中，程序才能够正常运行。链接器就是做这个工作的，将printf.o文件与hello.o文件链接，得到hello<strong>可执行目标文件</strong>，当然，也是二进制文件。这个可执行目标文件可以加载到内存中，被计算机所执行。</li>
+<li>编译阶段<br>编译器会将文本文件hello.i翻译成文本文件hello.s，它包含了一个汇编语言程序，。即将高级语言翻译成汇编语言。的汇编程序可以为不同的高级语言和不同的编译器提供通用的输出语言。<br><code>gcc -S hello.s hello.c</code></li>
+<li>汇编阶段<br>汇编器将汇编语言翻译成机器语言指令，把这些指令打包成一种叫做<strong>可重定位目标程序</strong>的格式，将结果放在<strong>hello.o</strong>这个二进制文件中。<br><code>gcc -c hello.o hello.c</code></li>
+<li>链接阶段<br>我们的hell.o调用了stdio的printf()函数，它是C语言的一个标准库函数，位于printf.o这个独立的预编译好了的目标文件中，必须要加入我们的hello.o文件中，程序才能够正常运行。链接器就是做这个工作的，将printf.o文件与hello.o文件链接，得到hello<strong>可执行目标文件</strong>，当然，也是二进制文件。这个可执行目标文件可以加载到内存中，被计算机所执行。<br><code>gcc -o hello hello.c</code>　这样的命令会生成可执行文件hello，一般没有后缀。</li>
 </ul>
-<h4 id="了解编译系统的工作流程"><a href="#了解编译系统的工作流程" class="headerlink" title="了解编译系统的工作流程"></a>了解编译系统的工作流程</h4><p>带来的好处：  </p>
+<h2 id="了解编译系统的工作流程"><a href="#了解编译系统的工作流程" class="headerlink" title="了解编译系统的工作流程"></a>了解编译系统的工作流程</h2><p>带来的好处：  </p>
 <ul>
 <li>优化程序性能<br>比如说，switch就会比if效率高吗？while和for的效率问题，函数调用的开销到底有多大，传指针和传值到底有什么区别？<br>这些目前我还不清楚、或者说不太清楚，所知道的也就是从书上、网上学来的。或许学了程序的编译过程，就会明白了把。</li>
 <li>理解链接时的错误<br>写代码时，经常会遇到链接错误，顺带提一下，<strong>动态链接</strong>和<strong>静态链接</strong>，待学习。</li>
 </ul>
+<h2 id="动态链接和静态链接"><a href="#动态链接和静态链接" class="headerlink" title="动态链接和静态链接"></a>动态链接和静态链接</h2><p><strong>1. 动态链接</strong><br>　　Windows: <strong>.lib文件</strong><br>　　Linux: <strong>.a</strong>文件<br>　　函数库的<strong>一份拷贝</strong>是可执行文件的<strong>物理组成部分</strong>，称之为静态链接。静态链接当链接程序时，需要使用的每个库函数的一份拷贝被加入到可执行文件中。静态链接使用静态库进行链接，生成的程序包含程序运行所需要的<strong>全部库</strong>，可以直接运行，不过静态链接生成的程序<strong>体积较大</strong>（即使是在静态链接中，整个库文件也<strong>并没有全部装入</strong>到可执行文件中，所装入的只是需要的函数）。<br><strong>2. 静态链接</strong><br>　　Windows: <strong>.dll文件</strong><br>　　Linux: <strong>.so文件</strong><br>　　如果可执行文件<strong>只是包含了文件名</strong>，让载入器在<strong>运行时</strong>能够寻找程序所需要的函数库，称之为动态链接。动态链接允许系统提供一个庞大的函数库集合，可以提供许多有用的服务，程序在运行时寻找它们。动态链接使用动态链接库进行链接，生成的程序在执行的时候需要加载所需的动态库才能运行。动态链接生成的程序<strong>体积较小</strong>，但是必须依赖所需的动态库，否则无法执行。<br><strong>3. 细节</strong><br>　　gcc编译器默认使用动态编译，如果要指定静态编译，需要加上<code>-static</code>参数</p>
 
       
     </div>
@@ -526,7 +527,11 @@
           
             <a href="/tags/计算机系统/" <i class="fa fa-tag"> 计算机系统</a>
           
-            <a href="/tags/计算机入门/" <i class="fa fa-tag"> 计算机入门</a>
+            <a href="/tags/动态链接/" <i class="fa fa-tag"> 动态链接</a>
+          
+            <a href="/tags/静态链接/" <i class="fa fa-tag"> 静态链接</a>
+          
+            <a href="/tags/编译系统/" <i class="fa fa-tag"> 编译系统</a>
           
         </div>
       
@@ -650,7 +655,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -665,7 +670,7 @@
 				<h3 class="widget-title">Tag Cloud</h3>
 				<div id="myCanvasContainer" class="widget tagcloud">
 					<canvas width="250" height="250" id="resCanvas" style="width=100%">
-						<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/700天/">700天</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-对象/">C++对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS/">CS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上手教程/">上手教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中缀表达式/">中缀表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习生活/">学习生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/对象模型/">对象模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/指针/">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈/">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/约瑟夫问题/">约瑟夫问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性表/">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机入门/">计算机入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评论/">评论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进制转化/">进制转化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆波兰式/">逆波兰式</a><span class="tag-list-count">1</span></li></ul>
+						<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/700天/">700天</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-对象/">C++对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS/">CS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上手教程/">上手教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中缀表达式/">中缀表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态链接/">动态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习生活/">学习生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/对象模型/">对象模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/指针/">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈/">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/约瑟夫问题/">约瑟夫问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性表/">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编译系统/">编译系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评论/">评论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进制转化/">进制转化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆波兰式/">逆波兰式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态链接/">静态链接</a><span class="tag-list-count">1</span></li></ul>
 					</canvas>
 				</div>
 			</div>
@@ -722,7 +727,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机系统学习"><span class="nav-number">1.</span> <span class="nav-text">计算机系统学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机系统"><span class="nav-number">1.1.</span> <span class="nav-text">计算机系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息"><span class="nav-number">1.2.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译系统"><span class="nav-number">1.3.</span> <span class="nav-text">编译系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#了解编译系统的工作流程"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">了解编译系统的工作流程</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机系统学习"><span class="nav-number">1.</span> <span class="nav-text">计算机系统学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机系统"><span class="nav-number">1.1.</span> <span class="nav-text">计算机系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息"><span class="nav-number">1.2.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译系统"><span class="nav-number">1.3.</span> <span class="nav-text">编译系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解编译系统的工作流程"><span class="nav-number">1.4.</span> <span class="nav-text">了解编译系统的工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态链接和静态链接"><span class="nav-number">1.5.</span> <span class="nav-text">动态链接和静态链接</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -763,7 +768,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">10.1k</span>
+    <span title="Site words total count">10.5k</span>
   
 </div>
 
