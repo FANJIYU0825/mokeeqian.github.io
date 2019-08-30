@@ -6,10 +6,10 @@
 
 
 <html class="theme-next pisces use-motion" lang="en">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -74,9 +74,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -94,31 +94,31 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="对象模型,C++,构造函数,拷贝构造函数,默认构造函数,">
 
 
 
 
 
-  <link rel="alternate" href="/rss2.xml" title="Mokeeqian's Blog" type="application/atom+xml" />
+  <link rel="alternate" href="/rss2.xml" title="Mokeeqian's Blog" type="application/atom+xml">
 
 
 
 
 
 
-<meta name="description" content="404                        L2Dwidget.init({&quot;log&quot;:false,&quot;pluginJsPath&quot;:&quot;lib/&quot;,&quot;pluginModelPath&quot;:&quot;assets/&quot;,&quot;pluginRootPath&quot;:&quot;live2dw/&quot;,&quot;tagMode&quot;:false});">
-<meta name="keywords" content="coding">
-<meta property="og:type" content="website">
-<meta property="og:title" content="404">
-<meta property="og:url" content="http://www.qianjipeng.top/404/index.html">
+<meta name="description" content="C++对象模型–构造函数这篇文章主要讲解C++中构造函数的机制，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数　　何谓默认构造函数？C++">
+<meta name="keywords" content="对象模型,C++,构造函数,拷贝构造函数,默认构造函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++对象模型--构造函数">
+<meta property="og:url" content="http://www.qianjipeng.top/2019/08/30/C-对象模型-构造函数/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="404                        L2Dwidget.init({&quot;log&quot;:false,&quot;pluginJsPath&quot;:&quot;lib/&quot;,&quot;pluginModelPath&quot;:&quot;assets/&quot;,&quot;pluginRootPath&quot;:&quot;live2dw/&quot;,&quot;tagMode&quot;:false});">
+<meta property="og:description" content="C++对象模型–构造函数这篇文章主要讲解C++中构造函数的机制，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数　　何谓默认构造函数？C++">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-17T00:25:51.740Z">
+<meta property="og:updated_time" content="2019-08-30T07:38:15.154Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="404">
-<meta name="twitter:description" content="404                        L2Dwidget.init({&quot;log&quot;:false,&quot;pluginJsPath&quot;:&quot;lib/&quot;,&quot;pluginModelPath&quot;:&quot;assets/&quot;,&quot;pluginRootPath&quot;:&quot;live2dw/&quot;,&quot;tagMode&quot;:false});">
+<meta name="twitter:title" content="C++对象模型--构造函数">
+<meta name="twitter:description" content="C++对象模型–构造函数这篇文章主要讲解C++中构造函数的机制，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数　　何谓默认构造函数？C++">
 
 
 
@@ -148,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="http://www.qianjipeng.top/404/"/>
+  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/30/C-对象模型-构造函数/">
 
 
 
 
 
-  <title>404 | Mokeeqian's Blog</title>
+  <title>C++对象模型--构造函数 | Mokeeqian's Blog</title>
   
 
 
@@ -185,7 +185,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Mokeeqian's Blog</span>
         <span class="logo-line-after"><i></i></span>
@@ -215,7 +215,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             Home
           </a>
@@ -225,7 +225,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             Tags
           </a>
@@ -235,7 +235,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             Categories
           </a>
@@ -245,7 +245,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
           </a>
@@ -255,7 +255,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             About
           </a>
@@ -265,7 +265,7 @@
         <li class="menu-item menu-item-love">
           <a href="/Love/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
             Love
           </a>
@@ -278,7 +278,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             Search
           </a>
@@ -299,9 +299,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="Searching..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -332,44 +330,284 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/30/C-对象模型-构造函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qian Jipeng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mokeeqian's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">404</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <!DOCTYPE html>
-<html lang="en">
-    <head><meta name="generator" content="Hexo 3.9.0">
-        <meta charset="UTF-8">
-        <title>404</title>
-    </head>
-    <body>
-        <script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js" charset="utf-8"></script>
-    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
-
-
+          <h1 class="post-title" itemprop="name headline">C++对象模型--构造函数</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+          
+            
+          
+          
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-30T13:45:00+08:00">
+                2019-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="C-对象模型–构造函数"><a href="#C-对象模型–构造函数" class="headerlink" title="C++对象模型–构造函数"></a>C++对象模型–构造函数</h1><p>这篇文章主要讲解C++中构造函数的机制，话不多说，开干！  </p>
+<p><strong><em>Content</em></strong><br><strong>1. 默认构造函数(Default Constructor)</strong><br><strong>2. 拷贝构造函数(Copy Constructor)</strong><br><strong>3. 程序转化(Programe Tansformation)</strong><br><strong>4. 成员初始化列表(Member Initialization List)</strong>  </p>
+<h2 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h2><p>　　何谓默认构造函数？<strong><em>C++ Annotated Reference Manual(ARM)</em></strong>中提及到：“default constrcutor在需要的时候会被编译器产生出来。”　那这里问题来了，“在需要的时候”，到底是什么时候？又是被谁需要？用来做什么事情？<br>以下代码为例：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">    Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">    <span class="keyword">if</span> ( bar.val || bar.pnext ) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　在这个程序中，要求val 和 pnext都必须被初始化为0，　那么代码中并没有提供setter函数，只有通过和构造函数来初始化，但是代码也没有提供构造函数。那么这个情形是否符合上述的“在需要的时候”？答案当然是：NO。对“在需要的时候”，可以分为<strong>程序需要</strong>和<strong>编译器需要</strong>，至于前者，那是我们程序员自己的事，我们需要，那我们就自己写构造；后者，是编译器的工作。那么本例中的当然是程序需要，提供默认构造函数的责任就在于程序员。所以上述程序<strong>不会生成一个默认构造函数</strong>。<br>　　那么，什么时候才会合成一个默认构造函数？当编译器需要的时候！被合成出来的默认构造函数<strong>执行编译器所需要的行为</strong>(想想都很可怕，我们都不知编译器到底在背后做了什么)，因此，即便编译器为程序合成了一个默认构造函数，这个构造函数也不会执行我们希望的操作，就是说，这个Foo()构造函数不会把val和pnext都初始化为0，至于到底初始化成一个什么样的东西，我们验证一下：<br><strong>代码A：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">	<span class="keyword">if</span> ( bar.val == <span class="number">0</span> )</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"hello world!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"nothing"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo_bar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>g++编译运行结果：  </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nothing</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>clang++编译运行结果：  </p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world!</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>初步怀疑，与编译器有关？  </p>
+<ol>
+<li><p>g++编译gdb调试： </p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">4196608</span>, pnext = <span class="number">0x400750</span> &lt;_start&gt;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>clang++编译gdb调试：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">2</span> = &#123;val = <span class="number">0</span>, pnext = <span class="number">0x0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>代码B：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">	<span class="keyword">if</span> ( bar.val == <span class="number">0</span> )</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"hello world!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"nothing"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"val= "</span> &lt;&lt; bar.val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"pnext= "</span> &lt;&lt; bar.pnext &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo_bar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>g++编译运行结果：  </p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello world!</span><br><span class="line">val= 0</span><br><span class="line">pnext= 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lang++编译运行结果：  </p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello world!</span><br><span class="line">val= 0</span><br><span class="line">pnext= 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gdb调试结果：</p>
+<p>两个编译器编译生成的可执行都是一样调试结果。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(gdb) s</span><br><span class="line">Foo_bar () <span class="built_in">at</span> <span class="number">2</span>.cpp:<span class="number">11</span></span><br><span class="line"><span class="number">11</span>		if ( <span class="keyword">bar.val </span>== <span class="number">0</span> )</span><br><span class="line">(gdb) p <span class="keyword">bar</span></span><br><span class="line"><span class="keyword">$4 </span>= &#123;val = <span class="number">0</span>, pnext = <span class="number">0x0</span>&#125;</span><br><span class="line">(gdb) s</span><br><span class="line"><span class="number">12</span>			cout &lt;&lt; <span class="string">"hello world!"</span> &lt;&lt; endl<span class="comment">;</span></span><br><span class="line">(gdb) s</span><br><span class="line">hello world!</span><br><span class="line"><span class="number">15</span>	    cout &lt;&lt; <span class="string">"val= "</span> &lt;&lt; <span class="keyword">bar.val </span>&lt;&lt; endl<span class="comment">;</span></span><br><span class="line">(gdb) p <span class="keyword">bar.val</span></span><br><span class="line"><span class="keyword">$5 </span>= <span class="number">0</span></span><br><span class="line"><span class="number">16</span>	    cout &lt;&lt; <span class="string">"pnext= "</span> &lt;&lt; <span class="keyword">bar.pnext </span>&lt;&lt; endl<span class="comment">;</span></span><br><span class="line">(gdb) s</span><br><span class="line">pnext= <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>也就是说，无论哪个编译器，这里的val和pnext都是0？无解。或许是我<code>bar.val</code>使用了成员操作符的缘故？<br>于是乎，再做一个测试，gdb卡卡。 </p>
+<p><strong>代码C：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo_bar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>编译，gdb调试结果：  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">4196128</span>, pnext = <span class="number">0x4005c0</span> &lt;_start&gt;&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>可见，这里的val = 4196128, 貌似是一个<del>随机生成的数值</del>。第二次编译，调试结果也是一样的，貌似不是随机生成的？但是为什么做输出时输出的是0？感觉像是cout()这个函数搞的鬼，问题先放在这。  </p>
+<ol start="2">
+<li>clang++编译，gdb调试结果：<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">0</span>, pnext = <span class="number">0x0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>emmmm…有点蒙了。</p>
+
       
     </div>
     
     
     
+    
+    
+    
+      <div>
+        
+<div style="text-align:center;color: #000000;font-size:16px;">
+    ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
+
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qian Jipeng
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://www.qianjipeng.top/2019/08/30/C-对象模型-构造函数/" title="C++对象模型--构造函数">http://www.qianjipeng.top/2019/08/30/C-对象模型-构造函数/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/对象模型/" <i class="fa fa-tag"> 对象模型</a>
+          
+            <a href="/tags/C/" <i class="fa fa-tag"> C++</a>
+          
+            <a href="/tags/构造函数/" <i class="fa fa-tag"> 构造函数</a>
+          
+            <a href="/tags/拷贝构造函数/" <i class="fa fa-tag"> 拷贝构造函数</a>
+          
+            <a href="/tags/默认构造函数/" <i class="fa fa-tag"> 默认构造函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/29/CSAPP-一-计算机系统漫游/" rel="next" title="CSAPP(一)--计算机系统漫游">
+                <i class="fa fa-chevron-left"></i> CSAPP(一)--计算机系统漫游
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -406,8 +644,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -506,6 +753,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-对象模型–构造函数"><span class="nav-number">1.</span> <span class="nav-text">C++对象模型–构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#默认构造函数"><span class="nav-number">1.1.</span> <span class="nav-text">默认构造函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
