@@ -115,10 +115,12 @@
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
 <meta property="og:description" content="计算机系统学习狂补知识ing…   计算机系统计算机系统是由计算机硬件和系统软件组成的，它们共同工作来与进行应用程序。接下来，我会以hello.c为例，进行一些零散的总结。 12345#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;	printf(&quot;Hello World!\n&quot;);    return 0;&amp;#125;  信息信息就是位+上下文，我们的hello">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-29T15:20:28.730Z">
+<meta property="og:image" content="http://px1awapyv.bkt.clouddn.com/55.png">
+<meta property="og:updated_time" content="2019-08-30T05:26:48.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSAPP(一)--计算机系统漫游">
 <meta name="twitter:description" content="计算机系统学习狂补知识ing…   计算机系统计算机系统是由计算机硬件和系统软件组成的，它们共同工作来与进行应用程序。接下来，我会以hello.c为例，进行一些零散的总结。 12345#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;	printf(&quot;Hello World!\n&quot;);    return 0;&amp;#125;  信息信息就是位+上下文，我们的hello">
+<meta name="twitter:image" content="http://px1awapyv.bkt.clouddn.com/55.png">
 
 
 
@@ -464,10 +466,7 @@
 <li>预处理器(ccp)</li>
 <li>编译器(ccl)</li>
 <li>汇编器(as)</li>
-<li>链接器(ld) </li>
-</ul>
-<p>相应的，一个程序的编译过程，也分为四个阶段：</p>
-<ul>
+<li>链接器(ld)<br><img src="http://px1awapyv.bkt.clouddn.com/55.png" alt><br>相应的，一个程序的编译过程，也分为四个阶段：</li>
 <li>预处理阶段<br>预处理器会扫描源文件，定位到以”#”开头的内容，根据这个内容，修改源文件的内容，比如说前面<code>#include &lt;stdio.h&gt;</code>，这时候，我就要找到stdio.h这个头文件，把这个头文件的内容直接插入到hello.c源文件中(至于具体在哪个位置，我们不知道)<br>，生成新的源文件<strong>hello.i</strong>，通常以<strong>.i</strong>作为文件扩展名。</li>
 <li>编译阶段<br>编译器会将文本文件hello.i翻译成文本文件hello.s，它包含了一个汇编语言程序，。即将高级语言翻译成汇编语言。的汇编程序可以为不同的高级语言和不同的编译器提供通用的输出语言。<br><code>gcc -S hello.s hello.c</code></li>
 <li>汇编阶段<br>汇编器将汇编语言翻译成机器语言指令，把这些指令打包成一种叫做<strong>可重定位目标程序</strong>的格式，将结果放在<strong>hello.o</strong>这个二进制文件中。<br><code>gcc -c hello.o hello.c</code></li>
