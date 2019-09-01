@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数错误的、不">
+<meta name="description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
 <meta name="keywords" content="默认构造函数,虚函数,虚基类,vptr,vtbl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++对象模型--默认构造函数">
 <meta property="og:url" content="http://www.qianjipeng.top/2019/08/30/C++对象模型-默认构造函数/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数错误的、不">
+<meta property="og:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-01T01:03:56.308Z">
+<meta property="og:updated_time" content="2019-09-01T04:59:18.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++对象模型--默认构造函数">
-<meta name="twitter:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   Content1. 默认构造函数(Default Constructor)2. 拷贝构造函数(Copy Constructor)3. 程序转化(Programe Tansformation)4. 成员初始化列表(Member Initialization List)   默认构造函数错误的、不">
+<meta name="twitter:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
 
 
 
@@ -455,7 +455,16 @@
 
       
         <p>这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，<font color="red">长篇文章</font>，话不多说，开干！  </p>
-<p><strong><em>Content</em></strong><br><strong>1. 默认构造函数(Default Constructor)</strong><br><strong>2. 拷贝构造函数(Copy Constructor)</strong><br><strong>3. 程序转化(Programe Tansformation)</strong><br><strong>4. 成员初始化列表(Member Initialization List)</strong>  </p>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：  </p>
+<ul>
+<li>默认构造函数</li>
+<li>默认析构函数</li>
+<li>拷贝构造函数</li>
+<li>赋值运算符</li>
+<li>地址运算符</li>
+<li>移动构造函数(C++11)</li>
+<li>移动赋值运算符(C++11)</li>
+</ul>
 <h1 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h1><p><font color="red">错误的、不全面的认识： </font> </p>
 <ul>
 <li>如果程序员没有定义默认的构造函数，那么编译器就会提供一个默认构造函数，来完成对成员的初始化</li>
@@ -474,8 +483,6 @@
 </li>
 <li>编译器合成的默认构造函数，不会初始化用户定义的类成员，退一步说，只会初始化编译器“需要的”成员</li>
 <li>编译器只做编译器自己的事，程序员的事需要程序员自己做</li>
-<li></li>
-<li></li>
 </ul>
 <h1 id="何谓默认构造函数"><a href="#何谓默认构造函数" class="headerlink" title="何谓默认构造函数"></a>何谓默认构造函数</h1><p>　　<strong><em>C++ Annotated Reference Manual(ARM)</em></strong>中提及到：<strong><font color="hotpink">“default constrcutor在需要的时候会被编译器产生出来。”</font></strong>　那这里问题来了，<font color="green">“在需要的时候”，到底是什么时候？又是被谁需要？用来做什么事情？</font><br>以下代码为例：  </p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">    Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">    <span class="keyword">if</span> ( bar.val || bar.pnext ) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -632,6 +639,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/08/31/C++对象模型-拷贝构造函数/" rel="prev" title="C++对象模型--拷贝构造函数">
+                C++对象模型--拷贝构造函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -711,7 +722,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -748,7 +759,7 @@
 				<h3 class="widget-title">Tag Cloud</h3>
 				<div id="myCanvasContainer" class="widget tagcloud">
 					<canvas width="250" height="250" id="resCanvas" style="width=100%">
-						<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-对象/">C++对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS/">CS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vptr/">vptr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vtbl/">vtbl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上手教程/">上手教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中缀表达式/">中缀表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态链接/">动态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习生活/">学习生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/对象模型/">对象模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/指针/">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈/">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/约瑟夫问题/">约瑟夫问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性表/">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编译系统/">编译系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚函数/">虚函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚基类/">虚基类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评论/">评论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进制转化/">进制转化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆波兰式/">逆波兰式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态链接/">静态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认构造函数/">默认构造函数</a><span class="tag-list-count">1</span></li></ul>
+						<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-对象/">C++对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS/">CS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vptr/">vptr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vtbl/">vtbl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上手教程/">上手教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中缀表达式/">中缀表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态链接/">动态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习生活/">学习生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/对象模型/">对象模型</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拷贝构造函数/">拷贝构造函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/指针/">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈/">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浅拷贝/">浅拷贝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深拷贝/">深拷贝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/约瑟夫问题/">约瑟夫问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性表/">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编译系统/">编译系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚函数/">虚函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚基类/">虚基类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评论/">评论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进制转化/">进制转化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆波兰式/">逆波兰式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态链接/">静态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认构造函数/">默认构造函数</a><span class="tag-list-count">1</span></li></ul>
 					</canvas>
 				</div>
 			</div>
@@ -805,7 +816,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#默认构造函数"><span class="nav-number">1.</span> <span class="nav-text">默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#何谓默认构造函数"><span class="nav-number">2.</span> <span class="nav-text">何谓默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#non-trivial默认构造函数"><span class="nav-number">3.</span> <span class="nav-text">non-trivial默认构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的member-class-object"><span class="nav-number">3.1.</span> <span class="nav-text">带有defalut constructor的member class object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的base-class"><span class="nav-number">3.2.</span> <span class="nav-text">带有defalut constructor的base class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-function的class"><span class="nav-number">3.3.</span> <span class="nav-text">带有一个virtual function的class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-base-class的class"><span class="nav-number">3.4.</span> <span class="nav-text">带有一个virtual base class的class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trivial默认构造函数-实际上不存在"><span class="nav-number">4.</span> <span class="nav-text">trivial默认构造函数(实际上不存在)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器如何合成默认构造函数"><span class="nav-number">5.</span> <span class="nav-text">编译器如何合成默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认构造函数"><span class="nav-number">2.</span> <span class="nav-text">默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#何谓默认构造函数"><span class="nav-number">3.</span> <span class="nav-text">何谓默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#non-trivial默认构造函数"><span class="nav-number">4.</span> <span class="nav-text">non-trivial默认构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的member-class-object"><span class="nav-number">4.1.</span> <span class="nav-text">带有defalut constructor的member class object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的base-class"><span class="nav-number">4.2.</span> <span class="nav-text">带有defalut constructor的base class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-function的class"><span class="nav-number">4.3.</span> <span class="nav-text">带有一个virtual function的class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-base-class的class"><span class="nav-number">4.4.</span> <span class="nav-text">带有一个virtual base class的class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trivial默认构造函数-实际上不存在"><span class="nav-number">5.</span> <span class="nav-text">trivial默认构造函数(实际上不存在)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器如何合成默认构造函数"><span class="nav-number">6.</span> <span class="nav-text">编译器如何合成默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
@@ -846,7 +857,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">12.4k</span>
+    <span title="Site words total count">14.2k</span>
   
 </div>
 

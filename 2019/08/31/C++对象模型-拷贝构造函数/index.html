@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="C++对象,对象模型,指针,">
+  <meta name="keywords" content="对象模型,拷贝构造函数,深拷贝,浅拷贝,">
 
 
 
@@ -107,23 +107,21 @@
 
 
 
-<meta name="description" content="写在前面为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一">
-<meta name="keywords" content="C++对象,对象模型,指针">
+<meta name="description" content="接上一篇C++默认构造函数，这一篇我们来讲C++拷贝构造函数。   写在前面(关于深拷贝、浅拷贝)在此之前，先介绍一下：    浅拷贝(值拷贝)只是对指针进行了拷贝，指针指向的地址并没有进行拷贝，拷贝后的指针和原指针指向同一块内存区域(这是很危险的、如果析构，会析构两次，导致内存泄漏！。我们的C++编译器合成的拷贝构造函数是执行浅拷贝，如果拷贝了指针(如Foo::*p)，必定会出错，这个指针会成为">
+<meta name="keywords" content="对象模型,拷贝构造函数,深拷贝,浅拷贝">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++对象模型--关于对象">
-<meta property="og:url" content="http://www.qianjipeng.top/2019/08/22/C++对象模型--关于对象/index.html">
+<meta property="og:title" content="C++对象模型--拷贝构造函数">
+<meta property="og:url" content="http://www.qianjipeng.top/2019/08/31/C++对象模型-拷贝构造函数/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="写在前面为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一">
+<meta property="og:description" content="接上一篇C++默认构造函数，这一篇我们来讲C++拷贝构造函数。   写在前面(关于深拷贝、浅拷贝)在此之前，先介绍一下：    浅拷贝(值拷贝)只是对指针进行了拷贝，指针指向的地址并没有进行拷贝，拷贝后的指针和原指针指向同一块内存区域(这是很危险的、如果析构，会析构两次，导致内存泄漏！。我们的C++编译器合成的拷贝构造函数是执行浅拷贝，如果拷贝了指针(如Foo::*p)，必定会出错，这个指针会成为">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482837/hexo/0822_3_muhhsi.jpg">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482844/hexo/0822_2_jibhqp.jpg">
-<meta property="og:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482845/hexo/0822_1_fniz8u.jpg">
-<meta property="og:updated_time" content="2019-08-22T14:11:07.378Z">
+<meta property="og:image" content="http://px1awapyv.bkt.clouddn.com/less.png">
+<meta property="og:image" content="http://px1awapyv.bkt.clouddn.com/deep.png">
+<meta property="og:updated_time" content="2019-09-01T08:46:41.645Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++对象模型--关于对象">
-<meta name="twitter:description" content="写在前面为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一">
-<meta name="twitter:image" content="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg">
+<meta name="twitter:title" content="C++对象模型--拷贝构造函数">
+<meta name="twitter:description" content="接上一篇C++默认构造函数，这一篇我们来讲C++拷贝构造函数。   写在前面(关于深拷贝、浅拷贝)在此之前，先介绍一下：    浅拷贝(值拷贝)只是对指针进行了拷贝，指针指向的地址并没有进行拷贝，拷贝后的指针和原指针指向同一块内存区域(这是很危险的、如果析构，会析构两次，导致内存泄漏！。我们的C++编译器合成的拷贝构造函数是执行浅拷贝，如果拷贝了指针(如Foo::*p)，必定会出错，这个指针会成为">
+<meta name="twitter:image" content="http://px1awapyv.bkt.clouddn.com/less.png">
 
 
 
@@ -153,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/22/C++对象模型--关于对象/">
+  <link rel="canonical" href="http://www.qianjipeng.top/2019/08/31/C++对象模型-拷贝构造函数/">
 
 
 
 
 
-  <title>C++对象模型--关于对象 | Mokeeqian's Blog</title>
+  <title>C++对象模型--拷贝构造函数 | Mokeeqian's Blog</title>
   
 
 
@@ -347,7 +345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/22/C++对象模型--关于对象/">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/08/31/C++对象模型-拷贝构造函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qian Jipeng">
@@ -364,7 +362,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++对象模型--关于对象</h1>
+          <h1 class="post-title" itemprop="name headline">C++对象模型--拷贝构造函数</h1>
         
 
         <div class="post-meta">
@@ -380,8 +378,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-22T09:39:00+08:00">
-                2019-08-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-31T22:58:00+08:00">
+                2019-08-31
               </time>
             
 
@@ -434,7 +432,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1.5k
+                  1.7k
                 </span>
               
 
@@ -459,54 +457,69 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>为什么要写C++一栏的博客呢?其实是为了加深理解和敦促学习，我发现只要离开写博客，人就变得懒散起来，每天写的代码零零散散，C++这门课程是在大二上开的，上课也就水水过去了，老师上课其实也还挺好，无奈听不懂啊，听不懂就不想听啊。现在想想挺后悔的。<br><br>后来由于实验室需要，而且自己也意识到C++的重要性，于是便自学。(貌似我所有的编程语言都是自学的、除了大一的C)至于自学，我的做法是，找博客，一个一个知识点地去学，后来也勉强算是入门了把。<br>好记性不如烂笔头，于是还是记录下来比较好。</p>
-<h3 id="关于入门"><a href="#关于入门" class="headerlink" title="关于入门"></a>关于入门</h3><p>入门书籍的选取太重要了。谁要是和你推荐诸如<em>21天学通C++</em>、<em>Visual C++ xxx</em>的，可以绝交了(滑稽)，我推荐<em>C++ primer</em>而不是<em>C++ primer plus</em>，不是带了个<em>plus</em>就是更牛x一点，相反，<em>plus</em>对于新入门的来说，讲的太过细致，有点晦涩，以至于你想放弃。搞清楚C++的大致框架后，可以读一读<em>C++沉思录</em>，这本书介绍的是一些C++思想，有助于你更好的理解。后期实战可以读一读<br><em>Effecitve C++</em>、<em>More Effective C++</em>，如果想深入了解C++底层机制的话，那么<em>深度探索C++对象模型</em>一定值得细细评味。   </p>
-<h1 id="关于C-对象"><a href="#关于C-对象" class="headerlink" title="关于C++对象"></a>关于C++对象</h1><ol>
-<li><p><strong>C++对象模式</strong><br>在C++中，有两种类数据成员：静态数据成员(static关键词修饰)和非静态数据成员(没有static关键词修饰)，三种类成员函数：static、non-static、virtual。<br>以下程序为例:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">int</span> y;</span><br><span class="line">    Point(<span class="keyword">int</span> _x, <span class="keyword">int</span> _y);</span><br><span class="line">    <span class="keyword">virtual</span> ~Point();</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">X</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Point point;</span><br></pre></td></tr></table></figure>
+        <p>接上一篇<a href="http://mokeeqian.github.io/2019/08/30/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B-%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" target="_blank" rel="noopener">C++默认构造函数</a>，这一篇我们来讲C++拷贝构造函数。  </p>
+<h1 id="写在前面-关于深拷贝、浅拷贝"><a href="#写在前面-关于深拷贝、浅拷贝" class="headerlink" title="写在前面(关于深拷贝、浅拷贝)"></a>写在前面(关于深拷贝、浅拷贝)</h1><p>在此之前，先介绍一下：  </p>
+<ul>
+<li><strong>浅拷贝(值拷贝)</strong><br>只是对指针进行了拷贝，指针指向的地址并没有进行拷贝，<strong><font color="red">拷贝后的指针和原指针指向同一块内存区域(这是很危险的、如果析构，会析构两次，导致内存泄漏！</font></strong>。我们的C++编译器合成的拷贝构造函数是执行<strong>浅拷贝</strong>，如果拷贝了指针(如Foo::*p)，必定会出错，这个指针会成为野指针<br><img src="http://px1awapyv.bkt.clouddn.com/less.png" alt></li>
+<li><strong>深拷贝(位拷贝)</strong><br>对指针和指针指向的地址都进行拷贝，<strong><font color="red">拷贝后的指针和原指针指向两块不同的内存区域，所以，执行深拷贝，需要开辟新的内存空间。</font></strong><br><img src="http://px1awapyv.bkt.clouddn.com/deep.png" alt></li>
+</ul>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>来看一个例子：<br><strong>TestA.cpp</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;  </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="keyword">char</span> *name;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Student();</span><br><span class="line">	~Student();</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Student::Student()</span><br><span class="line">&#123;</span><br><span class="line">	name = <span class="keyword">new</span> <span class="keyword">char</span>(<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Student"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line">Student::~Student()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Student "</span> &lt;&lt; name &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> name;</span><br><span class="line">	name = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	&#123;<span class="comment">// 花括号让s1和s2变成局部对象，方便测试</span></span><br><span class="line">		Student s1;</span><br><span class="line">		<span class="function">Student <span class="title">s2</span><span class="params">(s1)</span></span>;<span class="comment">// 调用默认拷贝构造函数</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<p>我创建了一个Point的对象，那么这个对象point的data member和funtion member是怎么布局呢?</p>
+<p>运行结果：  </p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Student</span><br><span class="line">~Student </span><br><span class="line">~Student </span><br><span class="line">*** <span class="literal">Error</span> <span class="keyword">in</span> `./a.<span class="keyword">out</span>': double free <span class="keyword">or</span> corruption (fasttop): <span class="number">0</span>x00000000010f9c20 ***</span><br></pre></td></tr></table></figure>
+
+<p>很显然，报出了一个错误，double free，也就是进行两次析构，这是不允许的。为什么呢？<br><strong><font color="gree">因为我这里调用的是编译器合成的拷贝构造函数，它进行的是浅拷贝，拷贝后s1.name和s2.name都是指向同一块内存区域，对同一块内存区域进行两次释放，能不出错吗？</font></strong>  </p>
+<p>我们来gdb一下看看：<br>这是对s2进行拷贝初始化之前，s2这时候还不存在，内存地址都还是起始地址</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;num = <span class="number">2</span>, name = <span class="number">0x614c20</span> <span class="string">"\024"</span>&#125;</span><br><span class="line">(gdb) p s2</span><br><span class="line">$<span class="number">2</span> = &#123;num = <span class="number">0</span>, name = <span class="number">0x0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是对s2进行拷贝初始化之后，s2这时候和s1的数据成员完全一致，也就是说，我们的拷贝构造函数只是对s1.name和s1.num进行了简单的复制，赋值给s2</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p s2</span><br><span class="line">$<span class="number">3</span> = &#123;num = <span class="number">2</span>, name = <span class="number">0x614c20</span> <span class="string">"\024"</span>&#125;</span><br><span class="line">(gdb) p s1</span><br><span class="line">$<span class="number">4</span> = &#123;num = <span class="number">2</span>, name = <span class="number">0x614c20</span> <span class="string">"\024"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们修改一下原来的代码、加上一个user-defined拷贝构造函数，进行深拷贝：<br><strong>TestB.cpp</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="keyword">char</span> *name;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Student();</span><br><span class="line">	Student(<span class="keyword">const</span> Student &amp; stu);</span><br><span class="line">	~Student();</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Student::Student()</span><br><span class="line">&#123;</span><br><span class="line">	name = <span class="keyword">new</span> <span class="keyword">char</span>(<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Student"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">Student::~Student()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"~Student "</span> &lt;&lt; name &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> name;</span><br><span class="line">	name = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 深拷贝构造函数</span></span><br><span class="line">Student::Student( <span class="keyword">const</span> Student &amp; stu ) &#123;</span><br><span class="line">	num = stu.num;</span><br><span class="line">	name = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">if</span> ( name!= <span class="literal">NULL</span> )</span><br><span class="line">		<span class="built_in">strcpy</span>(name, stu.name);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	&#123;<span class="comment">// 花括号让s1和s2变成局部对象，方便测试</span></span><br><span class="line">		Student s1;</span><br><span class="line">		<span class="function">Student <span class="title">s2</span><span class="params">(s1)</span></span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"结束"</span> &lt;&lt; <span class="built_in">endl</span>;	</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：  </p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Student</span><br><span class="line">~Student </span><br><span class="line">~Student </span><br></pre></td></tr></table></figure>
+
+<p>这次没有出现重复析构的错误了，输出的是我们希望的结果，我们再一次gdb看一下：  </p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p s1</span><br><span class="line">$<span class="number">3</span> = &#123;num = <span class="number">2</span>, name = <span class="number">0x614c20</span> <span class="string">"\024"</span>&#125;</span><br><span class="line">(gdb) p s2</span><br><span class="line">$<span class="number">4</span> = &#123;num = <span class="number">2</span>, name = <span class="number">0x615050</span> <span class="string">"\024"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>刚刚为TestB.cpp加上了一个拷贝构造函数，所以<strong><font color="gree">执行Student s2(s1)的时候，会调用我定义的Student(const Student &amp;stu)这个拷贝构造函数，执行深拷贝，即为s2对象的name属性开辟新的内存空间(首地址0x615050)，使得name指针指向这个新开辟的内存地址，而不是原来的s1的name指针所指向的地址(首地址0x614c20)</font></strong>，这样在析构的时候，便没有内存泄漏的错误了。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>知道区别之后，那么我们什么时候该用浅拷贝、什么时候该用深拷贝？<br>或许上面的例子是一个答案，当我们需要对动态的数据类型(指针、数组等)进行拷贝的时候，使用深拷贝，防止内存泄漏、指针悬挂问题的出现。<br>当然大多数情况下，浅拷贝就可以解决我们的问题了。</p>
+<h1 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h1><h2 id="什么是拷贝构造函数"><a href="#什么是拷贝构造函数" class="headerlink" title="什么是拷贝构造函数"></a>什么是拷贝构造函数</h2><ul>
+<li>对于普通的内置数据类型，要对它们进行复制很简单，只需要简单的赋值操作符就可以了</li>
+<li>类对象数据类型就不行了，它比较复杂，有各种各样的成员变量</li>
+</ul>
+<p>我们看一个例子：　　</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;  </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span>  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">    <span class="keyword">int</span> a;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">    <span class="comment">//构造函数  </span></span><br><span class="line">    Foo(<span class="keyword">int</span> b)  </span><br><span class="line">    &#123; a = b;&#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">//拷贝构造函数  </span></span><br><span class="line">    Foo(<span class="keyword">const</span> Foo &amp; C)  </span><br><span class="line">    &#123;  </span><br><span class="line">        a = C.a;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Show</span> <span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="function">Foo <span class="title">A</span><span class="params">(<span class="number">100</span>)</span></span>;  </span><br><span class="line">    <span class="function">Foo <span class="title">B</span><span class="params">(A)</span></span>;</span><br><span class="line">    <span class="comment">//Foo B = A; </span></span><br><span class="line">    B.Show ();  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的Foo(const Foo &amp; c)就是一个拷贝构造函数，它是一种特殊的构造函数，<strong>参数中必须要有一个是这个类的类型的引用变量</strong>，一个类中可以有多个拷贝构造函数。</p>
+<h2 id="何时调用"><a href="#何时调用" class="headerlink" title="何时调用"></a>何时调用</h2><p><strong>1. 对象需要通过另外一个对象进行初始化</strong><br>这一点显而易见</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Foo <span class="keyword">a</span>(b);	<span class="comment">	// 拷贝构造函数</span></span><br><span class="line">Foo <span class="keyword">a</span> = b;	<span class="comment">	// 拷贝赋值操作符</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 对象以值传递的方式传入函数参数</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span>  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:   </span><br><span class="line"> 	Foo(<span class="keyword">int</span> b) </span><br><span class="line">    &#123;  </span><br><span class="line">  		a = b;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt;<span class="string">"creat: "</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line"> 	Foo(<span class="keyword">const</span> Foo&amp; C) </span><br><span class="line">    &#123;</span><br><span class="line">  		a = C.a;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt;<span class="string">"copy"</span>&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line"> 	&#125;  </span><br><span class="line">   </span><br><span class="line"> 	~Foo()  </span><br><span class="line"> 	&#123;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt; <span class="string">"delete: "</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line"> 	&#125;  </span><br><span class="line">  </span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">Show</span> <span class="params">()</span>  </span></span><br><span class="line"><span class="function">     </span>&#123;  </span><br><span class="line">     	<span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">     &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//全局函数，传入的是对象  </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">(Foo C)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"test"</span>&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">	<span class="function">Foo <span class="title">test</span><span class="params">(<span class="number">1</span>)</span></span>;  </span><br><span class="line"> 	<span class="comment">//传入对象  </span></span><br><span class="line"> 	Foo_bar(test);  </span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用Foo_bar()的过程中，会有如下操作：  </p>
 <ul>
-<li><strong>简单对象模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482922/hexo/IMG_20190822_215545_xqr4z3.jpg" alt="简单对象模型"><br>这个模型是简单的一个模型，每个对象抽象成一些列的slots，每个slot对应一个成员，这样一来实现了member的对号入座。这样简化了编译器的设计复杂度，但是牺牲了效率和空间。<br>在这个模型下，<strong>members本身不在object中，而是指向members的指针存放在object中</strong>，避免了*”members有不同的数据类型，因而需要不同的储存空间”<em>。<br>如此，object中的member便是通过slots的索引值来索引的。<br>但是这个模型并**</em>没有***被C++所采用，不过这个观念被应用到了指向成员的指针(pointer-to-member)这一概念之中。</li>
-<li><strong>表格驱动摸模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482837/hexo/0822_3_muhhsi.jpg" alt="表格驱动模型"><br>这个模型是把members划分为两类，datas放在data member table中，functions放在member function table中，object本身含有指向这两个表格的指针。data member table直接指向data本身，function member table是一系列的slots，每个slots指出一个member function。<br>很遗憾，这个模型也<strong><em>没有</em></strong>被采用。但是member funciton table这一观念却支持了virtual function的机制。</li>
-<li><strong>C++对象模型</strong><br><img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482844/hexo/0822_2_jibhqp.jpg" alt="C++对象模型"><br>这是Stroustrup设计C++时采用的模型。在这个模型之下，所有的non-static members都被置于每一个class object之中，static data members则被存放在这个class中(原书说法是<del>存放在个别的class object之外</del>)，static和non-static function members也被存放在个别的class object之外。而virtual functions分两步处理:<ul>
-<li>每一个class都会产生一系列指向virtual functions的指针，这些指针存放在一个叫<strong><em>virtual table</em></strong>(vtbl)的表格之中</li>
-<li>每一个class object都会被”安排”一个指向这个class的<strong><em>vtbl</em></strong>的指针(<strong><em>vptr</em></strong>)，vptr的设置和重置由类的构造函数、拷贝构造函数、析构函数完成。(这里先不讨论)<br>每个class还会关联一个<strong><em>type info object</em></strong>,由vtbl指出来，通常放在vtbl的第一个slots的位置(<img src="https://res.cloudinary.com/hexo-mokeeqian/image/upload/v1566482845/hexo/0822_1_fniz8u.jpg" alt="虚函数的实现机制">)。</li>
+<li>test作为实参传入Foo_bar()函数的形参，生成临时Foo对象tmp</li>
+<li>调用拷贝构造函数，把test的值传递给tmp,一、二操作在一起就是Foo tmp(test)</li>
+<li>Foo_bar()函数执行完之后，调用析构函数，析构tmp对象 </li>
 </ul>
-</li>
-</ul>
-<ol start="2">
-<li><p><strong>关键词的差异</strong>(class和struct)<br>struct即结构，class即我们所说的类。C++为了兼容C，仍然保留了C的struct关键字，作为一种数据类型。</p>
+<p><strong>3. 对象以值传递的方式从函数返回</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span>  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:   </span><br><span class="line"> 	Foo(<span class="keyword">int</span> b) </span><br><span class="line">    &#123;  </span><br><span class="line">  		a = b;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt;<span class="string">"creat: "</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line"> 	Foo(<span class="keyword">const</span> Foo&amp; C) </span><br><span class="line">    &#123;</span><br><span class="line">  		a = C.a;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt;<span class="string">"copy"</span>&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line"> 	&#125;  </span><br><span class="line">   </span><br><span class="line"> 	~Foo()  </span><br><span class="line"> 	&#123;  </span><br><span class="line">  		<span class="built_in">cout</span>&lt;&lt; <span class="string">"delete: "</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line"> 	&#125;  </span><br><span class="line">  </span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">Show</span> <span class="params">()</span>  </span></span><br><span class="line"><span class="function">     </span>&#123;  </span><br><span class="line">     	<span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  </span><br><span class="line">     &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//全局函数，传入的是对象  </span></span><br><span class="line"><span class="function">Foo <span class="title">Foo_bar</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Foo <span class="title">test_local</span><span class="params">(<span class="number">100</span>)</span></span>;  </span><br><span class="line">	<span class="keyword">return</span> test_local;</span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line"> 	Foo_bar();  </span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当Foo_bar()执行到return 语句时候：</p>
 <ul>
-<li><p><strong>区别(简单理解)</strong></p>
-<ul>
-<li><p>struct默认访问限制和继承方式是<strong>public</strong>，并且C++中struct类型中也可以拥有构造函数<br>这点我在代码中有遇到过，一般用到struct的是一些比较操作，用于<strong>STL</strong>容器的<em>sort()</em>函数。如下示例程序:<br></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></span><br><span class="line">            <span class="keyword">int</span> a;</span><br><span class="line">            <span class="keyword">int</span> b;</span><br><span class="line">            <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> lhs, <span class="keyword">int</span> rhs)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> lhs &gt; rhs;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>class默认访问限制是<strong>private</strong></p>
-</li>
+<li>产生一个临时对象tmp</li>
+<li>调用拷贝构造函数，把test_local的值传递给tmp,一、二操作在一起就是Foo tmp(test_local)</li>
+<li>Foo_bar()函数执行到最后，调用析构函数，先析构test_local对象，再析构tmp对象</li>
 </ul>
-</li>
-<li><p><strong>何时该用struct</strong><br>我觉得都可以，在C++中可以将两者等同，如果你愿意使用struct的话。</p>
-</li>
+<h2 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h2><ul>
+<li><strong><font color="red">拷贝构造函数不能对static member进行拷贝赋值，因为static member属于这个类，而不被某个特定的对象所拥有</font></strong></li>
 </ul>
-</li>
-<li><p><strong>对象的差异</strong><br>C++程序设计模型直接支持以下三种程序设计范式： </p>
-<ul>
-<li><strong>程序模型(procedural model)</strong></li>
-<li><strong>抽象数据类型模式(abstract data type model)</strong>  </li>
-<li><strong>面向对象模型(object-oriented model)</strong>　</li>
-</ul>
-</li>
-<li><p><strong>杂谈</strong></p>
-<ul>
-<li>关于指针<br>　　<strong><em>一个指针或引用，无论其指向哪种数据类型，其本身所占内存大小是固定的。</em></strong><br>指针的类型，“指向不同的类型的指针”之间的差异，不在于指针的表示方法不同，也不在于指针的内容(地址)的不同，<strong><em>而是在于由这个指针所寻址出来的object类型的不同</em></strong>。也就是说，指针类型会让编译器以相应的方式去解释特定地址中的内容及大小。<br>　　一个指向地址100０的int类型的指针，在32位机器上，其所占的地址空间为1000~1003，因为32位机器上int类型所占４个字节(byte)。<br>　　那么一个指向地址1000的<strong>void*</strong>类型的指针呢？我们不知道，这也是为什么一个void*的类型的指针只能持有一个地址，不能操作其所指的对象的原因。<br>　　这里可以学习一下C++的四种<strong>cast</strong>。其本质是，<strong>只影响被指出的内存的大小和内容，不改变指针所指向的真正地址。</strong><br>　　日后再补充。</li>
-</ul>
-</li>
-</ol>
-<h1 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h1><p>C++真是一门<strong>magic</strong>的语言，究其本质，晦涩而又有点魅力，加油吧。</p>
+<h1 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h1><p>暂时就想到这么多，后面再进行补充。</p>
 
       
     </div>
@@ -538,7 +551,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://www.qianjipeng.top/2019/08/22/C++对象模型--关于对象/" title="C++对象模型--关于对象">http://www.qianjipeng.top/2019/08/22/C++对象模型--关于对象/</a>
+    <a href="http://www.qianjipeng.top/2019/08/31/C++对象模型-拷贝构造函数/" title="C++对象模型--拷贝构造函数">http://www.qianjipeng.top/2019/08/31/C++对象模型-拷贝构造函数/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -553,11 +566,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C-对象/" <i class="fa fa-tag"> C++对象</a>
-          
             <a href="/tags/对象模型/" <i class="fa fa-tag"> 对象模型</a>
           
-            <a href="/tags/指针/" <i class="fa fa-tag"> 指针</a>
+            <a href="/tags/拷贝构造函数/" <i class="fa fa-tag"> 拷贝构造函数</a>
+          
+            <a href="/tags/深拷贝/" <i class="fa fa-tag"> 深拷贝</a>
+          
+            <a href="/tags/浅拷贝/" <i class="fa fa-tag"> 浅拷贝</a>
           
         </div>
       
@@ -570,8 +585,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/20/hexo配置gitalk评论插件/" rel="next" title="hexo配置gitalk评论插件">
-                <i class="fa fa-chevron-left"></i> hexo配置gitalk评论插件
+              <a href="/2019/08/30/C++对象模型-默认构造函数/" rel="next" title="C++对象模型--默认构造函数">
+                <i class="fa fa-chevron-left"></i> C++对象模型--默认构造函数
               </a>
             
           </div>
@@ -579,10 +594,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/22/servlet学习/" rel="prev" title="java web--servlet学习">
-                java web--servlet学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -757,7 +768,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于入门"><span class="nav-number">1.0.1.</span> <span class="nav-text">关于入门</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#关于C-对象"><span class="nav-number">2.</span> <span class="nav-text">关于C++对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在后面"><span class="nav-number">3.</span> <span class="nav-text">写在后面</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面-关于深拷贝、浅拷贝"><span class="nav-number">1.</span> <span class="nav-text">写在前面(关于深拷贝、浅拷贝)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.1.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷贝构造函数"><span class="nav-number">2.</span> <span class="nav-text">拷贝构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是拷贝构造函数"><span class="nav-number">2.1.</span> <span class="nav-text">什么是拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时调用"><span class="nav-number">2.2.</span> <span class="nav-text">何时调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些注意事项"><span class="nav-number">2.3.</span> <span class="nav-text">一些注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在后面"><span class="nav-number">3.</span> <span class="nav-text">写在后面</span></a></li></ol></div>
             
 
           </div>
