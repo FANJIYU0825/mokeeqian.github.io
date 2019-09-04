@@ -2,10 +2,11 @@ title: C++对象模型--默认构造函数
 author: Qian Jipeng
 tags:
   - 默认构造函数
+  - 初始化列表
   - 虚函数
   - 虚基类
-  - vptr
   - vtbl
+  - vptr
 categories:
   - C++
 date: 2019-08-30 13:45:00
@@ -154,7 +155,7 @@ $1 = {val = 0, pnext = 0x0}
 此上，基本可以推断出，默认构造函数的行为貌似与编译器有关？
 但是可以肯定的是，
 
-# non-trivial默认构造函数
+# non-trivial(有用的)默认构造函数
 ## ***带有defalut constructor的member class object***  
 举个例子： 
 
@@ -243,7 +244,7 @@ void foo() {
 这一条没有弄懂.....
 
 
-# trivial默认构造函数(实际上不存在)
+# trivial(无用的)默认构造函数(实际上不存在)
 不满足上述4种情况、没有显式提供user-defined constructor的时候，这个默认构造函数叫implicit trivial default constructor，实际上**编译器根本不会合成这样的一个构造函数**。
 
 # 编译器如何合成默认构造函数
@@ -255,3 +256,268 @@ void foo() {
 + 对那些不满足上述4种情况、没有任何user-defined constructor的类，我们说它拥有的是implicit trivial default constructor，实际上，这个默认构造函数**<font color=red>根本不会被合成</font>**。
 + 在合成的默认构造函数中，只有**<font color=red>基类的子对象、类的成员对象</font>会**被初始化，所有其他的**<font color=red>nonstatic data membe</font>r**(如整数、整数指针、整数数组等)都**不会**被初始化，这些初始化对于程序而言或许很重要，但是编译器它管你干啥子。
 + 自己的事情自己做，编译器合成出来的构造函数只会做编译器需要做的工作，其他的工作需要程序员自己想办法。
+
+# 成员初始化列表(补充说明)
+## 初识
+C++还提供了一种初始化成员的方法：**成员初始化列表**  
+何为初始化列表？看个例子：  
+```
+class Foo {
+public:
+	int a;
+    float b;
+    
+    // 初始化列表初始化
+    Foo(int _a, float _b):a(_a),b(_b)
+    { }
+    
+    // 一般赋值运算符初始化
+    Foo(int _a, float _b)
+    {
+    	a = _a;
+        b = _b;
+    }
+    
+    ~Foo()
+    { }
+};  
+```
+
+如上的`Foo(int _a, float _b):a(_a),b(_b) { }`就是一个含有列表初始化式的构造函数，观察上述两种初始化的方法，貌似没有区别，真的是这样的吗？  
+首先区别肯定是有的，而且**C++ Primer**中明确提出，有的时候，必须要使用成员初始化列表，否则编译器就会爆出错误！
+
+## 本质
+初始化列表的本质是什么？</br>
+举个例子：</br>
+```
+class Word {
+private:
+	String name;
+    int count;
+public:
+	Word():name(0)
+    {
+    	count = 0;
+    }
+};
+```
+我们猜测一下，这个name是如何被初始化的。</br>
+```
+// C++伪代码
+Word::Word(*this)
+{
+	// String(int) 构造
+    name.String::String(0);
+    count = 0;
+}
+```
+这里，0 要被String类的String(int)构造函数来构造成一个String对象，然后才能对name初始化。
+也就是说，**<font color=red>对于成员初始化列表，编译器会将其按照变量声明顺序来处理(也不是绝对的，后面会给出例子)，插入一些代码到构造函数中的任何user-defined code之前。</font>**
+
+
+## 何时使用
+**1. 编译器要求的时候**  
+**深度探索C++对象模型**中提到，在以下四种情况，对成员的初始化必须要使用成员初始化列表：  
++ 初始化一个reference member
++ 初始化一个const member
++ 调用base class的constructor，而它拥有一组参数  
++ 调用member class的constructor，而它拥有一组参数  
+
+
+下面对以上四种情况给出说明：  
+### 初始化reference member
+我们知道引用一经指定，便不可以再改变，一个引用的成员在声明之后，不可以进行赋值。
+```
+class Foo {
+public:
+	int a;
+    int &b;
+    
+
+    
+    // 一般赋值运算符初始化
+    Foo(int _a, int _b)
+    {
+    	a = _a;
+        b = _b;
+    }
+    
+    ~Foo()
+    { }
+}; 
+
+int main() {
+	Foo foo(1, 2);
+    return 0;
+}
+```
+报错：</br>
+```
+5.cpp: In constructor ‘Foo::Foo(int, int)’:
+5.cpp:9:5: error: uninitialized reference member in ‘int&’ [-fpermissive]
+     Foo(int _a, int _b)
+     ^
+5.cpp:4:10: note: ‘int& Foo::b’ should be initialized
+     int &b;
+          ^
+```
+说我Foo::b没有初始化，也就是把b放在构造函数中，不能够正确初始化，那么我们来改一下：</br>
+```
+class Foo {
+public:
+	int a;
+    int &b;
+    
+    Foo(int _a, int _b):b(_b)
+    {
+    	a = _a;
+    }
+    
+    ~Foo()
+    { }
+}; 
+
+int main() {
+	Foo foo(1, 2);
+    return 0;
+}
+```
+这样是没有问题的了。
+
+### 初始化const member
+为什么const member需要使用成员初始化列表呢？貌似不可理解。</br>
+实际上，const成员在声明后就马上需要初始化，如果放在构造函数中，执行的是赋值操作，这是不允许的。</br>
+我们来试试用构造函数初始化const member：</br>
+**TestA.cpp：**
+```
+class Foo {
+public:
+	int a;
+    const float b;
+    
+    // 初始化列表初始化
+    //o(int _a, float _b):a(_a),b(_b)
+    //}
+    
+    // 一般赋值运算符初始化
+    Foo(int _a, float _b)
+    {
+    	a = _a;
+        b = _b;
+    }
+    
+    ~Foo()
+    { }
+}; 
+
+int main() {
+	Foo foo(1, 0.1);
+    return 0;
+}
+```
+编译报错：
+```
+5.cpp: In constructor ‘Foo::Foo(int, float)’:
+5.cpp:9:5: error: uninitialized const member in ‘const float’ [-fpermissive]
+     Foo(int _a, float _b)
+     ^
+5.cpp:4:17: note: ‘const float Foo::b’ should be initialized
+     const float b;
+                 ^
+5.cpp:12:11: error: assignment of read-only member ‘Foo::b’
+         b = _b;
+           ^
+```
+
+他说，我对只读的成员Foo::b赋值了，如你所见，因为**<font color=red>const成员变量一经声明或定义，就不可以在修改，而我们放在构造函数中，进行的是赋值操作，所以编译器会报错。</font>**所以const member必须要用成员列表初始化。
+
+### 调用base class的constructor，而它拥有一组参数
+即: 初始化基类的成员，而且这个基类只有带参数的构造函数，没有无参构造函数</br>
+**TestB.cpp**
+```
+#include <iostream>
+using namespace std;
+class Foo {
+public:
+	int a;
+    float b;
+  
+    // 一般赋值运算符初始化
+    Foo(int _a, float _b)
+    {
+    	a = _a;
+        b = _b;
+    }
+    
+    ~Foo()
+    { }
+}; 
+
+class Bar:public Foo {
+public:
+	int c;
+
+    
+    Bar(int _a, int _b, int _c):c(_c),Foo(_a,_b)
+    { }
+    
+    ~Bar()
+    { }
+
+};
+int main() {
+	Bar bar(1,2.2,2);
+    cout << bar.a <<endl << bar.b << endl << bar.c <<endl;
+    return 0;
+}
+```
+运行结果：</br>
+```
+1
+2
+2
+```
+
+### 调用member class的constructor，而它拥有一组参数
+即初始化的是一个类对象成员，而且这个类成员所对应的类只有带参数的构造函数，没有无参的构造函数。</br>
+这一点貌似与上一条类似？
+
+
+**2. 程序效率要求的时候**</br>
+这点先放着，等我搞懂初始化、赋值、定义、声明后在写。
+```
+class Word {
+private:
+	String name;
+    int count;
+public:
+	Word() 
+    {
+    	name = 0;
+        count = 0;
+    }
+};
+```
+
+
+## 注意
+C++初始化列表的初始化顺序是什么样的呢？</br>
+**<font color=red>与初始化列表的变量出现顺序无关，而是和变量的声明顺序有关！</font>**</br>
+但是答案就是绝对的了吗？看个例子：</br>
+```
+class X {
+	int i;
+    int j;
+public:
+	X(int val)
+    	:j(val), i(j)
+    { }
+};
+```
+这里你发现了什么？</br>
+**没错！如果按照变量声明的顺序来初始化的话，那么就是先初始化i，在初始化j，那么这个构造函数必定会出错，因为用j来初始化i，此时j还没有被初始化！！！</br>
+所以说，<font color=red>初始化列表的初始化顺序也不是确定的，要视具体情况而定。</font>**
+
+
+
+
