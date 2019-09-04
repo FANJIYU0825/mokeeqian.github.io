@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[C变量--声明、定义、赋值、初始化]]></title>
+    <url>%2F2019%2F09%2F04%2FC%E5%8F%98%E9%87%8F-%E5%A3%B0%E6%98%8E%E3%80%81%E5%AE%9A%E4%B9%89%E3%80%81%E8%B5%8B%E5%80%BC%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%2F</url>
+    <content type="text"><![CDATA[出来混总是要还的，这不，来还大一C的陈年旧账了。打算深入细致的学习一下计算机，所以必须要从基础打起来。这篇文章算是扫盲篇吧。讲述C中的变量的声明、定义、赋值和初始化。为了让文章通俗易懂，我就只介绍一下它们的区别了吧。下一篇我们再讨论C/C++内存管理，会涉及const、static、auto等等这些变量类型。说明一下，这篇文章是关于C语言的变量的。 变量定义 变量的定义就是告诉编译器，我要创建一个变量了，你要找个地方将它存放起来，这个地方可以是堆栈(局部变量)，也可以是寄存器(寄存器变量)，还可以是…变量的定义指定了一个数据类型，可以是int，也可以是char，也可以是struct… 总结一下，变量的定义可以概括为：type variablelisttype表示的是变量的数据类型，variablelist表示的是一个变量列表，存放的是一个个变量，用逗号隔开。举个例子：int a,b,c;这里就定义了三个int类型的变量a,b,c 变量声明 那么什么是变量的声明呢？变量声明可以理解为程序员给编译器一个“保证”，程序员：“我待会要使用一个变量，但是这个变量我现在用不上，我先这样写者，你编译我程序的时候，不要报错。”所以，变量声明向编译器保证变量会以一定的类型和名称存在特定的地方，所以编译器就可以在不知道这个变量的细节的情况下，进行编译。值得一提的是，变量声明只在程序的编译时有效，链接时需要程序员给变量实际的变量定义，否则，报错。 变量的初始化变量的初始化是给变量赋予一个值。C中两种类型的表达式：左值表达式和右值表达式 左值早期的C给出的定义是：左值是一个表达式，可能出现在赋值操作的左边或右边，但右值只能出现在右边。我觉得这个定义实在是太模糊了，甚至它是错的。比如：a*b = 100显然这个写法是错误的，但是它符合上述说法。我的理解是：左值（lvalue）是一个表达式，它表示一个可被标识的（变量或对象的）内存位置，并且允许使用&amp;操作符来获取这块内存的地址。 123456789101112int i = 42;i = 43; int* p = &amp;i; // ok, i 是左值int&amp; foo();foo() = 42; // ok, foo() 是左值int* p1 = &amp;foo(); // ok, foo() 是左值int foobar();int j = 0;j = foobar(); // ok, foobar() 是右值int* p2 = &amp;foobar(); // 错误，不能获取右值的地址j = 42; // ok, 42 是右值 右值那么不是左值，便是右值了。 关于局部变量和全局变量局部变量需要程序员自己初始化，全局变量会被编译器自动初始化，但是我们还是应该养成良好的变成变成习惯，正确定义和初始化变量。int —&gt; 0double —&gt; 0float —&gt; 0char —&gt; 0ptr —&gt; NULL]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>声明</tag>
+        <tag>赋值</tag>
+        <tag>定义</tag>
+        <tag>初始化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[C++对象模型--拷贝构造函数]]></title>
     <url>%2F2019%2F08%2F31%2FC%2B%2B%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B-%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[接上一篇C++默认构造函数，这一篇我们来讲C++拷贝构造函数。 写在前面(关于深拷贝、浅拷贝)在此之前，先介绍一下： 浅拷贝只是对指针进行了拷贝，指针指向的地址并没有进行拷贝，拷贝后的指针和原指针指向同一块内存区域(这是很危险的、如果析构，会析构两次，导致内存泄漏！。我们的C++编译器合成的拷贝构造函数是执行浅拷贝，如果拷贝了指针(如Foo::*p)，必定会出错，这个指针会成为野指针 深拷贝对指针和指针指向的地址都进行拷贝，拷贝后的指针和原指针指向两块不同的内存区域，所以，执行深拷贝，需要开辟新的内存空间。 区别来看一个例子：TestA.cpp 123456789101112131415161718192021222324252627282930313233#include &lt;iostream&gt; using namespace std;class Student&#123;private: int num; char *name;public: Student(); ~Student();&#125;; Student::Student()&#123; name = new char(20); cout &lt;&lt; "Student" &lt;&lt; endl;&#125;Student::~Student()&#123; cout &lt;&lt; "~Student " &lt;&lt; name &lt;&lt; endl; delete name; name = NULL;&#125; int main()&#123; &#123;// 花括号让s1和s2变成局部对象，方便测试 Student s1; Student s2(s1);// 调用默认拷贝构造函数 &#125; return 0;&#125; 运行结果： 1234Student~Student ~Student *** Error in `./a.out': double free or corruption (fasttop): 0x00000000010f9c20 *** 很显然，报出了一个错误，double free，也就是进行两次析构，这是不允许的。为什么呢？因为我这里调用的是编译器合成的拷贝构造函数，它进行的是浅拷贝，拷贝后s1.name和s2.name都是指向同一块内存区域，对同一块内存区域进行两次释放，能不出错吗？ 我们来gdb一下看看：这是对s2进行拷贝初始化之前，s2这时候还不存在，内存地址都还是起始地址 123$1 = &#123;num = 2, name = 0x614c20 "\024"&#125;(gdb) p s2$2 = &#123;num = 0, name = 0x0&#125; 这是对s2进行拷贝初始化之后，s2这时候和s1的数据成员完全一致，也就是说，我们的拷贝构造函数只是对s1.name和s1.num进行了简单的复制，赋值给s2 1234(gdb) p s2$3 = &#123;num = 2, name = 0x614c20 "\024"&#125;(gdb) p s1$4 = &#123;num = 2, name = 0x614c20 "\024"&#125; 我们修改一下原来的代码、加上一个user-defined拷贝构造函数，进行深拷贝：TestB.cpp 123456789101112131415161718192021222324252627282930313233343536373839404142434445#include &lt;iostream&gt;#include &lt;string.h&gt;using namespace std; class Student&#123;private: int num; char *name;public: Student(); Student(const Student &amp; stu); ~Student();&#125;; Student::Student()&#123; name = new char(20); cout &lt;&lt; "Student" &lt;&lt; endl; &#125;Student::~Student()&#123; cout &lt;&lt; "~Student " &lt;&lt; name &lt;&lt; endl; delete name; name = NULL;&#125;// 深拷贝构造函数Student::Student( const Student &amp; stu ) &#123; num = stu.num; name = new char[20]; if ( name!= NULL ) strcpy(name, stu.name);&#125; int main()&#123; &#123;// 花括号让s1和s2变成局部对象，方便测试 Student s1; Student s2(s1); cout &lt;&lt; "结束" &lt;&lt; endl; &#125; return 0;&#125; 运行结果： 123Student~Student ~Student  这次没有出现重复析构的错误了，输出的是我们希望的结果，我们再一次gdb看一下： 1234(gdb) p s1$3 = &#123;num = 2, name = 0x614c20 "\024"&#125;(gdb) p s2$4 = &#123;num = 2, name = 0x615050 "\024"&#125; 刚刚为TestB.cpp加上了一个拷贝构造函数，所以执行Student s2(s1)的时候，会调用我定义的Student(const Student &amp;stu)这个拷贝构造函数，执行深拷贝，即为s2对象的name属性开辟新的内存空间(首地址0x615050)，使得name指针指向这个新开辟的内存地址，而不是原来的s1的name指针所指向的地址(首地址0x614c20)，这样在析构的时候，便没有内存泄漏的错误了。 使用知道区别之后，那么我们什么时候该用浅拷贝、什么时候该用深拷贝？或许上面的例子是一个答案，当我们需要对动态的数据类型(指针、数组等)进行拷贝的时候，使用深拷贝，防止内存泄漏、指针悬挂问题的出现。当然大多数情况下，浅拷贝就可以解决我们的问题了。 拷贝构造函数什么是拷贝构造函数 对于普通的内置数据类型，要对它们进行复制很简单，只需要简单的赋值操作符就可以了 类对象数据类型就不行了，它比较复杂，有各种各样的成员变量 我们看一个例子： 12345678910111213141516171819202122232425262728293031#include &lt;iostream&gt; using namespace std; class Foo &#123; private: int a; public: //构造函数 Foo(int b) &#123; a = b;&#125; //拷贝构造函数 Foo(const Foo &amp; C) &#123; a = C.a; &#125; void Show () &#123; cout&lt;&lt;a&lt;&lt;endl; &#125; &#125;; int main() &#123; Foo A(100); Foo B(A); //Foo B = A; B.Show (); return 0; &#125; 这里的Foo(const Foo &amp; c)就是一个拷贝构造函数，它是一种特殊的构造函数，参数中必须要有一个是这个类的类型的引用变量，一个类中可以有多个拷贝构造函数。 何时调用1. 对象需要通过另外一个对象进行初始化这一点显而易见 12Foo a(b); // 拷贝构造函数Foo a = b; // 拷贝赋值操作符 2. 对象以值传递的方式传入函数参数 12345678910111213141516171819202122232425262728293031323334353637383940class Foo &#123; private: int a;public: Foo(int b) &#123; a = b; cout&lt;&lt;"creat: "&lt;&lt;a&lt;&lt;endl; &#125; Foo(const Foo&amp; C) &#123; a = C.a; cout&lt;&lt;"copy"&lt;&lt;endl; &#125; ~Foo() &#123; cout&lt;&lt; "delete: "&lt;&lt;a&lt;&lt;endl; &#125; void Show () &#123; cout&lt;&lt;a&lt;&lt;endl; &#125; &#125;; //全局函数，传入的是对象 void Foo_bar(Foo C) &#123; cout&lt;&lt;"test"&lt;&lt;endl; &#125; int main() &#123; Foo test(1); //传入对象 Foo_bar(test); return 0; &#125; 调用Foo_bar()的过程中，会有如下操作： test作为实参传入Foo_bar()函数的形参，生成临时Foo对象tmp 调用拷贝构造函数，把test的值传递给tmp,一、二操作在一起就是Foo tmp(test) Foo_bar()函数执行完之后，调用析构函数，析构tmp对象 3. 对象以值传递的方式从函数返回 123456789101112131415161718192021222324252627282930313233343536373839class Foo &#123; private: int a;public: Foo(int b) &#123; a = b; cout&lt;&lt;"creat: "&lt;&lt;a&lt;&lt;endl; &#125; Foo(const Foo&amp; C) &#123; a = C.a; cout&lt;&lt;"copy"&lt;&lt;endl; &#125; ~Foo() &#123; cout&lt;&lt; "delete: "&lt;&lt;a&lt;&lt;endl; &#125; void Show () &#123; cout&lt;&lt;a&lt;&lt;endl; &#125; &#125;; //全局函数，传入的是对象 Foo Foo_bar() &#123; Foo test_local(100); return test_local;&#125; int main() &#123; Foo_bar(); return 0; &#125; 当Foo_bar()执行到return 语句时候： 产生一个临时对象tmp 调用拷贝构造函数，把test_local的值传递给tmp,一、二操作在一起就是Foo tmp(test_local) Foo_bar()函数执行到最后，调用析构函数，先析构test_local对象，再析构tmp对象 一些注意事项 拷贝构造函数不能对static member进行拷贝赋值，因为static member属于这个类，而不被某个特定的对象所拥有 写在后面暂时就想到这么多，后面再进行补充。]]></content>
@@ -65,9 +80,9 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>servlet</tag>
         <tag>web</tag>
         <tag>jsp</tag>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -78,8 +93,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>servlet</tag>
         <tag>web</tag>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>

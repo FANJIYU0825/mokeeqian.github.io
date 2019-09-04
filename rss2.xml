@@ -8,8 +8,27 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Welcome to mokeeqian&#39;s blog</description>
-    <pubDate>Tue, 03 Sep 2019 04:46:48 GMT</pubDate>
+    <pubDate>Wed, 04 Sep 2019 10:28:56 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>C变量--声明、定义、赋值、初始化</title>
+      <link>http://www.qianjipeng.top/2019/09/04/C%E5%8F%98%E9%87%8F-%E5%A3%B0%E6%98%8E%E3%80%81%E5%AE%9A%E4%B9%89%E3%80%81%E8%B5%8B%E5%80%BC%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96/</link>
+      <guid>http://www.qianjipeng.top/2019/09/04/C%E5%8F%98%E9%87%8F-%E5%A3%B0%E6%98%8E%E3%80%81%E5%AE%9A%E4%B9%89%E3%80%81%E8%B5%8B%E5%80%BC%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96/</guid>
+      <pubDate>Wed, 04 Sep 2019 09:31:00 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;　　出来混总是要还的，这不，来还大一C的陈年旧账了。打算深入细致的学习一下计算机，所以必须要从基础打起来。这篇文章算是扫盲篇吧。讲述C中的变量的声明、定义、赋值和初始化。为了让文章通俗易懂，我就只介绍一下它们的区别了吧。下一篇我们再讨论C/C++内存管理，会涉及const、
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>　　出来混总是要还的，这不，来还大一C的陈年旧账了。打算深入细致的学习一下计算机，所以必须要从基础打起来。这篇文章算是扫盲篇吧。讲述C中的变量的声明、定义、赋值和初始化。为了让文章通俗易懂，我就只介绍一下它们的区别了吧。下一篇我们再讨论C/C++内存管理，会涉及const、static、auto等等这些变量类型。<br><br>说明一下，这篇文章是关于C语言的变量的。</p><h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><p>　　变量的定义就是告诉编译器，我要创建一个变量了，你要找个地方将它存放起来，这个地方可以是堆栈(局部变量)，也可以是寄存器(寄存器变量)，还可以是…<br><br>变量的定义指定了一个数据类型，可以是int，也可以是char，也可以是struct…<br><br>　　总结一下，变量的定义可以概括为：<br><br><code>type variablelist</code><br>type表示的是变量的数据类型，variablelist表示的是一个变量列表，存放的是一个个变量，用逗号隔开。<br><br>举个例子：<br><br><code>int a,b,c;</code><br>这里就定义了三个int类型的变量a,b,c<br></p><h1 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h1><p>　　那么什么是变量的声明呢？<br><br>变量声明可以理解为程序员给编译器一个“保证”，程序员：“我待会要使用一个变量，但是这个变量我现在用不上，我先这样写者，你编译我程序的时候，不要报错。”<br><br>所以，变量声明向编译器保证变量会以一定的类型和名称存在特定的地方，所以编译器就可以在不知道这个变量的细节的情况下，进行编译。值得一提的是，变量声明只在程序的编译时有效，链接时需要程序员给变量实际的变量定义，否则，报错。<br></p><h1 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h1><p>变量的初始化是给变量赋予一个值。<br><br>C中两种类型的表达式：<strong>左值表达式</strong>和<strong>右值表达式</strong><br></p><h2 id="左值"><a href="#左值" class="headerlink" title="左值"></a>左值</h2><p>早期的C给出的定义是：<br><br><strong><font color="hotpink">左值是一个表达式，可能出现在赋值操作的左边或右边，但右值只能出现在右边。</font></strong><br><br>我觉得这个定义实在是太模糊了，甚至它是错的。比如：<br><br><code>a*b = 100</code><br><br>显然这个写法是错误的，但是它符合上述说法。<br><br>我的理解是：<br><br><strong><font color="red">左值（lvalue）是一个表达式，它表示一个可被标识的（变量或对象的）内存位置，并且允许使用&amp;操作符来获取这块内存的地址。</font></strong></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line">i = <span class="number">43</span>; </span><br><span class="line"><span class="keyword">int</span>* p = &amp;i; <span class="comment">// ok, i 是左值</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>&amp; <span class="title">foo</span><span class="params">()</span></span>;</span><br><span class="line">foo() = <span class="number">42</span>; <span class="comment">// ok, foo() 是左值</span></span><br><span class="line"><span class="keyword">int</span>* p1 = &amp;foo(); <span class="comment">// ok, foo() 是左值</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">foobar</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">j = foobar(); <span class="comment">// ok, foobar() 是右值</span></span><br><span class="line"><span class="keyword">int</span>* p2 = &amp;foobar(); <span class="comment">// 错误，不能获取右值的地址</span></span><br><span class="line">j = <span class="number">42</span>; <span class="comment">// ok, 42 是右值</span></span><br></pre></td></tr></table></figure><h2 id="右值"><a href="#右值" class="headerlink" title="右值"></a>右值</h2><p>那么不是左值，便是右值了。</p><h2 id="关于局部变量和全局变量"><a href="#关于局部变量和全局变量" class="headerlink" title="关于局部变量和全局变量"></a>关于局部变量和全局变量</h2><p>局部变量需要程序员自己初始化，全局变量会被编译器自动初始化，但是我们还是应该养成良好的变成变成习惯，正确定义和初始化变量。<br><br>int —&gt; 0<br><br>double —&gt; 0<br><br>float —&gt; 0<br><br>char —&gt; 0<br><br>ptr —&gt; NULL</p>]]></content:encoded>
+      
+      <comments>http://www.qianjipeng.top/2019/09/04/C%E5%8F%98%E9%87%8F-%E5%A3%B0%E6%98%8E%E3%80%81%E5%AE%9A%E4%B9%89%E3%80%81%E8%B5%8B%E5%80%BC%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>C++对象模型--拷贝构造函数</title>
@@ -184,25 +203,6 @@
       <content:encoded><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>以前其实挺看不上前端coder的(该死的程序员鄙视链: C++ &gt; C &gt; JAVA &gt; PHP &gt; HTML …)，究其原因，我个人认为，做C++的，以后可很自豪的说：　我是做C++的。<br>可是，我们真的懂C++了吗？<br>这要看我们对<em>懂</em>的定义了，你要说我会用C++开发一个坦克大战，我会用C++开发一个管理系统，我会用C++，我懂C++了。这样其实也没错，可是C++这门特殊的语言，它所表现的并不只是面向对象的特性。业界有句话说的C++: <em>你永远不知道C++编译器背着你干了哪些事</em>。这句话其实我很认同。<br>例如:</p><ul><li>默认构造函数在什么情况下编译器会为我们提供？<ul><li>答案是：　在程序员没有自己定义构造函数的时候，编译器会为我们提供一个默认的无参的构造函数，一旦程序员定义了构造函数，默认的构造函数便不再被提供。</li></ul></li><li>C++的虚函数机制是什么样的？<ul><li>就我所了解的，虚函数机制是靠虚函数表<em>VTable</em>和虚函数指针<em>VPtr</em>来实现的，VTable里存放了虚函数的函数地址…(移步侯捷大师译作<a href="https://baike.baidu.com/item/%E6%B7%B1%E5%BA%A6%E6%8E%A2%E7%B4%A2C%2B%2B%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener">深度探索C++对象模型</a>)</li></ul></li></ul><p>C++是一门Magic的语言，要想学好C++、用好C++，必须要掌握深层次的内容，作为一只野生程序员(姑且允许我自称为程序员)，我认为我是不懂C++的。要学好C++，时间成本很高，但是一旦有所领悟，才算是入门了C++，就直接可以作为饭碗。否则，只会搬起石头砸自己的脚。<br>至于为什么要学习前端知识呢？</p><ul><li>B/S模式向C/S模式转变的趋向<br>  当下随着浏览器技术的不断发展和计算机硬件水平的不断提高，C/S模式(即客户端/服务端模式)已经不能满足用户的需求、或者说开发维护成本高，比如：动态交互、可移植性，这些C/S模式下都很难去实现</li><li>增加技术栈<br>  俗话说技多不压身(何况”技“也不多)，目前只是简单学了C、C++、Python、JAVA，作为一名非科班coder，任重道远啊。再者，之前老师有找我做个一个互联网+的项目，由于缺少前端开发经验，虽然想接手，但是还是拒绝了老师。后来想想挺后悔的。于是乎，打算这个暑假进击JSP，目标是开发出一个web管理信息系统。</li><li>放弃C++，转向java?<br>  真的是，越学越发现自己越菜。相比较于C++，JAVA更容易能够实现一些东西，估计以后自己会走JAVA方向的吧？当然C++也会持续挖掘的。</li></ul><h1 id="学习过程"><a href="#学习过程" class="headerlink" title="学习过程"></a>学习过程</h1><p>目前正在狂补知识，顺便实现一下配套的小demo，先写到这里，待实战遇到问题时，再更。</p>]]></content:encoded>
       
       <comments>http://www.qianjipeng.top/2019/08/20/java%20web%20%E5%AD%A6%E4%B9%A0%E5%BC%80%E7%AF%87/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Hello World</title>
-      <link>http://www.qianjipeng.top/2019/08/17/hello-world/</link>
-      <guid>http://www.qianjipeng.top/2019/08/17/hello-world/</guid>
-      <pubDate>Sat, 17 Aug 2019 13:25:13 GMT</pubDate>
-      <description>
-      
-        
-        
-          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-        
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content:encoded>
-      
-      <comments>http://www.qianjipeng.top/2019/08/17/hello-world/#disqus_thread</comments>
     </item>
     
   </channel>
