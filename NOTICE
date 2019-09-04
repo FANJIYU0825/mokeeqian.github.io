@@ -4,7 +4,7 @@ git add source _config.yml themes
 git commit -m "backup"
 git push origin hexo-back
 
-再
+然后
 hexo clean
 hexo g
 hexo d
