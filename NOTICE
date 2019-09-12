@@ -1,8 +1,9 @@
 博客发布之前，先备份
-cd /media/newDisk/HEXO/
-git add source _config.yml themes 
-git commit -m "backup"
-git push origin hexo-back
+#cd /media/newDisk/HEXO/
+#git add source _config.yml themes 
+#git commit -m "backup"
+#git push origin hexo-back
+执行backup.sh脚本即可
 
 然后
 hexo clean
