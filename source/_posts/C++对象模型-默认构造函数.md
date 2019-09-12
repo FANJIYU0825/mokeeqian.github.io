@@ -7,6 +7,7 @@ tags:
   - 虚基类
   - vtbl
   - vptr
+  - 对象模型
 categories:
   - C++
 date: 2019-08-30 13:45:00
