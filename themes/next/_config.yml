@@ -628,8 +628,7 @@ local_search:
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
   # show top n results per article, show all results by setting to -1
-  ##top_n_per_article: 1
-  top_n_per_article: -1
+  top_n_per_article: 5
 
 # ---------------------------------------------------------------
 # Tags Settings
@@ -824,7 +823,7 @@ vendors:
 
 
 live2d:
-  enable: true
+  enable: false
   scriptFrom: local
   model: 
     use: live2d-widget-model-koharu #模型选择
