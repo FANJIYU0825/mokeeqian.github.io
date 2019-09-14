@@ -101,7 +101,7 @@ menu:
   about: /about/ || user
   #guestboard: /guestbook || newspaper-o #自己添加的字段
   #commonweal: /404/ || heartbeat
-  Love: /Love/ || heartbeat
+  Love: /love/ || heartbeat
   
 # Enable/Disable menu icons.
 menu_icons:
