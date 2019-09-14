@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="线程,进程,">
 
 
 
@@ -107,17 +107,21 @@
 
 
 
-<meta name="description" content="Welcome to mokeeqian&apos;s blog">
-<meta name="keywords" content="coding">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Mokeeqian&#39;s Blog">
-<meta property="og:url" content="http://www.qianjipeng.top/tags/vptr/index.html">
+<meta name="description" content="计算机系统中的进程与线程参考这篇文章 写在前面 进程和线程都是一个对cpu工作的时间段的描述 进程是资源分配的最小单位，线程是cpu调度的最小单位 进程是线程的爸爸(开玩笑的比喻)  要知道的知识 cpu的运算和执行速度很快、非常快，就连寄存器也只能勉强追上cpu的车尾灯，至于内存以及其他存储设备，是远远追不上cpu的处理速度的 计算机很笨，cpu在同一时间段只能做一件事情，我们平时的一边码代码，">
+<meta name="keywords" content="线程,进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程与进程">
+<meta property="og:url" content="http://www.qianjipeng.top/2019/09/14/线程与进程/index.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
-<meta property="og:description" content="Welcome to mokeeqian&apos;s blog">
+<meta property="og:description" content="计算机系统中的进程与线程参考这篇文章 写在前面 进程和线程都是一个对cpu工作的时间段的描述 进程是资源分配的最小单位，线程是cpu调度的最小单位 进程是线程的爸爸(开玩笑的比喻)  要知道的知识 cpu的运算和执行速度很快、非常快，就连寄存器也只能勉强追上cpu的车尾灯，至于内存以及其他存储设备，是远远追不上cpu的处理速度的 计算机很笨，cpu在同一时间段只能做一件事情，我们平时的一边码代码，">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-0ae120b1a3510dddaf3cf464895a0776_hd.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-10425b0a0856632b913d445dbdfa4deb_hd.jpg">
+<meta property="og:updated_time" content="2019-09-14T08:13:41.168Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mokeeqian&#39;s Blog">
-<meta name="twitter:description" content="Welcome to mokeeqian&apos;s blog">
+<meta name="twitter:title" content="线程与进程">
+<meta name="twitter:description" content="计算机系统中的进程与线程参考这篇文章 写在前面 进程和线程都是一个对cpu工作的时间段的描述 进程是资源分配的最小单位，线程是cpu调度的最小单位 进程是线程的爸爸(开玩笑的比喻)  要知道的知识 cpu的运算和执行速度很快、非常快，就连寄存器也只能勉强追上cpu的车尾灯，至于内存以及其他存储设备，是远远追不上cpu的处理速度的 计算机很笨，cpu在同一时间段只能做一件事情，我们平时的一边码代码，">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-0ae120b1a3510dddaf3cf464895a0776_hd.jpg">
 
 
 
@@ -147,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.qianjipeng.top/tags/vptr/">
+  <link rel="canonical" href="http://www.qianjipeng.top/2019/09/14/线程与进程/">
 
 
 
 
 
-  <title>Tag: vptr | Mokeeqian's Blog</title>
+  <title>线程与进程 | Mokeeqian's Blog</title>
   
 
 
@@ -172,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
 	<!-- 添加fork me on github -->
@@ -327,52 +331,248 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>vptr<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/2019/09/14/线程与进程/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qian Jipeng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mokeeqian's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/08/30/C++对象模型-默认构造函数/" itemprop="url">
-              
-                <span itemprop="name">C++对象模型--默认构造函数</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">线程与进程</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-30T13:45:00+08:00" content="2019-08-30">
-          08-30
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+          
+            
+          
+          
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-14T15:22:00+08:00">
+                2019-09-14
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机系统/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  881
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="计算机系统中的进程与线程"><a href="#计算机系统中的进程与线程" class="headerlink" title="计算机系统中的进程与线程"></a>计算机系统中的进程与线程</h1><p><a href="https://www.jianshu.com/p/a4fa4edbeb8a" target="_blank" rel="noopener">参考这篇文章</a></p>
+<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><ul>
+<li>进程和线程都是一个对cpu工作的时间段的描述</li>
+<li>进程是资源分配的最小单位，线程是cpu调度的最小单位</li>
+<li>进程是线程的爸爸(开玩笑的比喻)</li>
+</ul>
+<h2 id="要知道的知识"><a href="#要知道的知识" class="headerlink" title="要知道的知识"></a>要知道的知识</h2><ul>
+<li>cpu的运算和执行速度很快、非常快，就连寄存器也只能勉强追上cpu的车尾灯，至于内存以及其他存储设备，是远远追不上cpu的处理速度的</li>
+<li>计算机很笨，cpu在同一时间段只能做一件事情，我们平时的一边码代码，一边开网易云音乐，其实是cpu不断在这两个客户端软件之间来回切换，只不过切换的速度太快了，以至于我们以为cpu是同时运行的</li>
+<li>计算机执行程序的过程，轮流执行，加载程序A的上下文，执行程序A，保存程序A的上下文；加载程序B的上下文，执行程序B，保存程序B的上下文；……</li>
+</ul>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>进程是资源分配的最小单位，貌似有点抽象，就来打个比方吧。我们开了一个word，开了一个qq音乐和一个网易云音乐，那么我们的计算机中就有了三个进程(假使不存在其他的程序，假使)，那么下图就是我们的cpu运行这三个程序的情况：<br><img src="https://pic3.zhimg.com/80/v2-0ae120b1a3510dddaf3cf464895a0776_hd.jpg" alt><br>每个小方格都是一个cpu运行的时间片段，约100ms，cpu就是这样不断地在这些程序之间来回切换，由于时间间隔太短，所以造成了多个程序“并行运行”的假象。其实不然，这是早些年在单核cpu上出现的技术，所以说，当运行的程序过多，cpu负载越大，切换的时间也就越长，所以我们会感觉到明显的卡顿现象。于是乎，多核cpu出现了。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>可以说，线程是进程的儿子，一个进程可以拥有多个线程，这些线程会共享cpu为进程分配的资源，就好像多个儿子共享父亲的财产。<br><img src="https://pic4.zhimg.com/80/v2-10425b0a0856632b913d445dbdfa4deb_hd.jpg" alt><br>以qq为例，我们打开了qq，我们一边聊天，一边发图片，一边发文件，一边刷新qq消息，这些都是在我们的qq程序里面实现的，也就是说，我们做的这四个工作，都是在qq这个进程之下。</p>
+<h3 id="区别及联系"><a href="#区别及联系" class="headerlink" title="区别及联系"></a>区别及联系</h3><p>联系：</p>
+<ul>
+<li>一个线程只会属于一个进程，但一个进程至少会有一个线程</li>
+<li>资源分配给进程，这些资源会被它下面的线程共享</li>
+<li>线程在执行过程中，需要同步协作，不同进程的线程需要依靠消息通信来实现协作</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
+<li>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行</li>
+<li>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源.</li>
+<li>系统开销：在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销</li>
+</ul>
 
       
     </div>
+    
+    
+    
+    
+    
+    
+      <div>
+        
+<div style="text-align:center;color: #000000;font-size:16px;">
+    ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
 
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qian Jipeng
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://www.qianjipeng.top/2019/09/14/线程与进程/" title="线程与进程">http://www.qianjipeng.top/2019/09/14/线程与进程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线程/" <i class="fa fa-tag"> 线程</a>
+          
+            <a href="/tags/进程/" <i class="fa fa-tag"> 进程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/12/C++之sizeof与strlen/" rel="next" title="C/C++之sizeof与strlen">
+                <i class="fa fa-chevron-left"></i> C/C++之sizeof与strlen
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -380,6 +580,14 @@
 
 
           
+
+  		<!-- gitalk 评论插件
+      <!-- <div class="comments" id="comments"> -->
+    <div id="gitalk-container"></div>
+    
+  
+  
+
 
         </div>
         
@@ -400,8 +608,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -500,6 +717,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机系统中的进程与线程"><span class="nav-number">1.</span> <span class="nav-text">计算机系统中的进程与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要知道的知识"><span class="nav-number">1.2.</span> <span class="nav-text">要知道的知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.3.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">1.3.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">1.3.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别及联系"><span class="nav-number">1.3.3.</span> <span class="nav-text">区别及联系</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -657,6 +890,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -698,6 +935,20 @@
 
 
 <!-- gitalk 评论系统 2019.8.19 -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    const gitalk = new Gitalk({
+      clientID: '909e234c41ceb8d54301',
+      clientSecret: 'bb9bb885ee85617d1cca4243198ab3b19b238c2f',
+      repo: 'hexo-blog-comments',
+      owner: 'mokeeqian',
+      admin: ['mokeeqian'],
+	  id: '<%= page.date %>'
+    })
+    gitalk.render('gitalk-container')
+  </script>
 
 
 
