@@ -32,7 +32,7 @@
 
 
 
-  <meta name="baidu-site-verification" content="NRymoD1KwM">
+  <meta name="baidu-site-verification" content="y1NHlxJpC2">
 
 
 
@@ -113,7 +113,7 @@
 <meta name="keywords" content="对象模型,默认构造函数,初始化列表,虚函数,虚基类,vtbl,vptr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++对象模型--默认构造函数">
-<meta property="og:url" content="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+<meta property="og:url" content="http://www.qianjipeng.top/C++对象模型-默认构造函数.html">
 <meta property="og:site_name" content="Mokeeqian&#39;s Blog">
 <meta property="og:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
 <meta property="og:locale" content="en">
@@ -150,7 +150,7 @@
 
 
 
-  <link rel="canonical" href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+  <link rel="canonical" href="http://www.qianjipeng.top/C++对象模型-默认构造函数.html">
 
 
 
@@ -334,7 +334,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+    <link itemprop="mainEntityOfPage" href="http://www.qianjipeng.top/C++对象模型-默认构造函数.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qian Jipeng">
@@ -538,7 +538,7 @@
 
 <p>最后说一点，如果Bar类有多个member class object怎么办？当然是按上面的道理来，只不过对这些object，<strong><font color="red">按照它们声明的顺序来初始化</font></strong>。</p>
 <h2 id="带有defalut-constructor的base-class"><a href="#带有defalut-constructor的base-class" class="headerlink" title="带有defalut constructor的base class"></a><strong><em>带有defalut constructor的base class</em></strong></h2><p>顾名思义，如果一个没有任何构造函数的继承于一个带有默认构造函数的基类，那么编译器就会<strong><font color="red">为这个类合成一个默认构造函数，这个构造函数会调用上一层继承类的默认构造函数。</font></strong><br>那么如果程序员为这个类写了很多个构造函数，但是就是没有默认构造函数，怎么办？<strong><font color="red">编译器会把默认构造函数中需要的代码插入到所有的现有的构造函数中，那么如果上述第一种情况也存在呢？答案是，这些构造函数会在基类构造函数被调用之后，再被调用。</font></strong></p>
-<h2 id="带有一个virtual-function的class"><a href="#带有一个virtual-function的class" class="headerlink" title="带有一个virtual function的class"></a><strong><em>带有一个virtual function的class</em></strong></h2><p>这个与C++中的虚函数的机制有关，参见<a href="http://mokeeqian.github.io/2019/08/22/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B--%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1/">C++虚函数机制</a>，以下代码为例：  </p>
+<h2 id="带有一个virtual-function的class"><a href="#带有一个virtual-function的class" class="headerlink" title="带有一个virtual function的class"></a><strong><em>带有一个virtual function的class</em></strong></h2><p>这个与C++中的虚函数的机制有关，参见<a href="http://mokeeqian.github.io/2019/08/22/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B--%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1/" target="_blank" rel="noopener">C++虚函数机制</a>，以下代码为例：  </p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">flip</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">flip</span><span class="params">(<span class="keyword">const</span> Widget &amp; widget)</span> </span>&#123;</span><br><span class="line">	widget.flip();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设Bell和Whistle都是继承于Widget</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Bell b;</span><br><span class="line">    Whistle w;</span><br><span class="line">    flip(b);</span><br><span class="line">    flip(w);-</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -640,7 +640,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html" title="C++对象模型--默认构造函数">https://mokeeqian.github.io/C++对象模型-默认构造函数.html</a>
+    <a href="http://www.qianjipeng.top/C++对象模型-默认构造函数.html" title="C++对象模型--默认构造函数">http://www.qianjipeng.top/C++对象模型-默认构造函数.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
