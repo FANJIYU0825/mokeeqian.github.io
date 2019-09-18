@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="对象模型,默认构造函数,初始化列表,虚函数,虚基类,vtbl,vptr,">
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Mokeeqian's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
+<meta name="keywords" content="对象模型,默认构造函数,初始化列表,虚函数,虚基类,vtbl,vptr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++对象模型--默认构造函数">
+<meta property="og:url" content="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+<meta property="og:site_name" content="Mokeeqian&#39;s Blog">
+<meta property="og:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-09-12T13:45:41.355Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++对象模型--默认构造函数">
+<meta name="twitter:description" content="这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，长篇文章，话不多说，开干！   写在前面C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：    默认构造函数 默认析构函数 拷贝构造函数 赋值运算符 地址运算符 移动构造函数(C++11) 移动赋值运算符(C++11)  默认构造函数错误的、不全面的认识：    如果程序员没有定义默认的构造函数，那么编译器就会">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+
+
+
+
+
+  <title>C++对象模型--默认构造函数 | Mokeeqian's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<!-- 添加fork me on github -->
+<!--	<a href="https://github.com/mokeeqian"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+-->
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mokeeqian's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+    
+    <main id="main" class="main">
+    
+      <div class="main-inner">
+    
+<!-- 网易云音乐 -->
+<!--<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100 height=86 src="//music.163.com/outchain/player?type=2&id=26237342&auto=0&height=66"></iframe>
+--> 
+
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qian Jipeng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mokeeqian's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++对象模型--默认构造函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+          
+            
+          
+          
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-30T13:45:00+08:00">
+                2019-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  4.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要讲解C++中默认构造函数的机制，同时解决了困扰了我很久的问题，<font color="red">长篇文章</font>，话不多说，开干！  </p>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>C++编译器为程序员自动提供下面这些成员函数(在合适的时候)：  </p>
+<ul>
+<li>默认构造函数</li>
+<li>默认析构函数</li>
+<li>拷贝构造函数</li>
+<li>赋值运算符</li>
+<li>地址运算符</li>
+<li>移动构造函数(C++11)</li>
+<li>移动赋值运算符(C++11)</li>
+</ul>
+<h1 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h1><p><font color="red">错误的、不全面的认识： </font> </p>
+<ul>
+<li>如果程序员没有定义默认的构造函数，那么编译器就会提供一个默认构造函数，来完成对成员的初始化</li>
+<li>编译器合成出来的默认构造函数会明确的设置类的每个数据成员的值  </li>
+</ul>
+<p><font color="green">正确认识： </font> </p>
+<ul>
+<li>默认构造函数只在“被需要”的时候，才会被编译器合成，可能是有用或无用</li>
+<li>对构造函数的需求分为程序需求和编译器需求</li>
+<li>一个有用的默认构造函数在必要的时候(4种情况下)也会被编译器合成<ul>
+<li>带有默认构造函数的类对象成员</li>
+<li>带有默认构造函数的基类</li>
+<li>带有虚函数的类</li>
+<li>带有虚基类的类</li>
+</ul>
+</li>
+<li>编译器合成的默认构造函数，不会初始化用户定义的类成员，退一步说，只会初始化编译器“需要的”成员</li>
+<li>编译器只做编译器自己的事，程序员的事需要程序员自己做</li>
+</ul>
+<h1 id="何谓默认构造函数"><a href="#何谓默认构造函数" class="headerlink" title="何谓默认构造函数"></a>何谓默认构造函数</h1><p>　　<strong><em>C++ Annotated Reference Manual(ARM)</em></strong>中提及到：<strong><font color="hotpink">“default constrcutor在需要的时候会被编译器产生出来。”</font></strong>　那这里问题来了，<font color="green">“在需要的时候”，到底是什么时候？又是被谁需要？用来做什么事情？</font><br>以下代码为例：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">    Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">    <span class="keyword">if</span> ( bar.val || bar.pnext ) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　在这个程序中，要求val 和 pnext都必须被初始化为0，那么代码中并没有提供setter函数，只有通过和构造函数来初始化，但是代码也没有(显式)提供构造函数。那么这个情形是否符合上述的“在需要的时候”？答案当然是：NO。对“在需要的时候”，可以分为<strong>程序需要</strong>和<strong>编译器需要</strong>，至于前者，那是我们程序员自己的事，我们需要，那我们就自己写构造；后者，是编译器的工作。那么本例中的当然是程序需要，提供默认构造函数的责任就在于程序员。所以上述程序<strong>不会生成一个默认构造函数</strong>。<br>　　那么，什么时候才会合成一个默认构造函数？当编译器需要的时候！被合成出来的默认构造函数<strong>执行编译器所需要的行为</strong>(想想都很可怕，我们都不知编译器到底在背后做了什么)，因此，即便编译器为程序合成了一个默认构造函数，这个构造函数也不会执行我们希望的操作，就是说，这个Foo()构造函数<strong>不会把val和pnext都初始化为0</strong>，也就是我们所说的编译器合成的<strong>无用的默认构造函数(trivial)</strong>，<strong><em>C++ Standard[ISO-C++95]</em></strong>中的原话是，<strong><font color="hotpink">“对于class X，如果没有任何user-defined constructor，那么会有一个default constructor会被隐式声明出来，一个隐式声明出来的defalut constructor是一个trivial constructor”。</font></strong><br>　　我们验证一下：  <br><br><br><strong>代码A：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; bar.val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; bar.pnext &lt;&lt; <span class="built_in">endl</span>;    	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo_bar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>g++编译运行结果：  </p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4196624</span></span><br><span class="line"><span class="number">0x400770</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>clang++编译运行结果：  </p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>初步怀疑，与编译器有关？  </p>
+<ol>
+<li><p>g++编译gdb调试： </p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">4196624</span>, pnext = <span class="number">0x400770</span> &lt;_start&gt;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>clang++编译gdb调试：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">2</span> = &#123;val = <span class="number">0</span>, pnext = <span class="number">0x0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>另外，在线编译器爆出了一个warnning:  </p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Start</span><br><span class="line">prog.cc: <span class="keyword">In</span> <span class="function"><span class="keyword">function</span> '<span class="title">void</span> <span class="title">Foo_bar</span><span class="params">()</span>':</span></span><br><span class="line">prog.cc:<span class="number">11</span>:<span class="number">14</span>: warning: <span class="string">'bar.Foo::val'</span> <span class="keyword">is</span> used uninitialized <span class="keyword">in</span> this <span class="function"><span class="keyword">function</span> [-<span class="title">Wuninitialized</span>]</span></span><br><span class="line"><span class="function">   11 |  <span class="title">cout</span> &lt;&lt; <span class="title">bar</span>.<span class="title">val</span> &lt;&lt; <span class="title">endl</span>;</span></span><br><span class="line">      |              ^~~</span><br><span class="line">prog.cc:<span class="number">12</span>:<span class="number">17</span>: warning: <span class="string">'bar.Foo::pnext'</span> may be used uninitialized <span class="keyword">in</span> this <span class="function"><span class="keyword">function</span> [-<span class="title">Wmaybe</span>-<span class="title">uninitialized</span>]</span></span><br><span class="line"><span class="function">   12 |     <span class="title">cout</span> &lt;&lt; <span class="title">bar</span>.<span class="title">pnext</span> &lt;&lt; <span class="title">endl</span>;</span></span><br><span class="line">      |             ~~~~^~~~~</span><br><span class="line"><span class="number">4197792</span></span><br><span class="line"><span class="number">0</span>x400c20</span><br><span class="line"><span class="number">0</span></span><br><span class="line">Finish</span><br></pre></td></tr></table></figure>
+
+<p>意思是val和pnext没有被初始化，这就说明了我们的无用的默认构造函数没有对类成员进行初始化，在这里，貌似要解释一下<font color="red">初始化</font>和<font color="red">赋值  </font>  <br><br><br><strong>代码B：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	Foo *pnext;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo_bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo bar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Foo_bar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>g++编译，gdb调试结果：  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">4196128</span>, pnext = <span class="number">0x4005c0</span> &lt;_start&gt;&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>可见，这里的val = 4196128, 貌似是一个<del>随机生成的数值</del>。 </p>
+<ol start="2">
+<li>clang++编译，gdb调试结果：<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="number">1</span> = &#123;val = <span class="number">0</span>, pnext = <span class="number">0x0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>此上，基本可以推断出，默认构造函数的行为貌似与编译器有关？<br>但是可以肯定的是，</p>
+<h1 id="non-trivial-有用的-默认构造函数"><a href="#non-trivial-有用的-默认构造函数" class="headerlink" title="non-trivial(有用的)默认构造函数"></a>non-trivial(有用的)默认构造函数</h1><h2 id="带有defalut-constructor的member-class-object"><a href="#带有defalut-constructor的member-class-object" class="headerlink" title="带有defalut constructor的member class object"></a><strong><em>带有defalut constructor的member class object</em></strong></h2><p>举个例子： </p>
+  <figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Foo();</span><br><span class="line">    Foo(<span class="keyword">int</span> val);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Foo foo;		<span class="comment">// 不是继承，是内含!</span></span><br><span class="line">    <span class="keyword">char</span> *<span class="keyword">str</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> foo_bar() &#123;</span><br><span class="line">	Bar bar;	<span class="comment">//Bar::foo必须在这里初始化</span></span><br><span class="line">	<span class="keyword">if</span> ( <span class="keyword">str</span> ) &#123;</span><br><span class="line">  	<span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们的Foo是一个拥有默认构造函数的一个类，当Foo的一个对象foo作为我们的Bar类的一个成员，同时Bar类没有任何构造函数的时候，那么这个类的implicit default constructor就是nontrivial的，编译器为就会在Bar类的constructor<strong><font color="red">真正需要</font></strong>的时候，为其合成一个默认构造函数。<br>被合成的Bar类的构造函数，里面有必要的代码，能够调用Foo::Foo()对Bar::foo进行处理，但是Bar::str需要程序员来初始化，我们大胆猜测一下，编译器合成的Bar::Bar()可能是这样子的：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> Bar::Bar() &#123;</span><br><span class="line">	foo.Foo::Foo();		<span class="comment">//伪代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时，我们程序员还会写一个Bar::Bar()，对Bar::str初始化：  </p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Bar::Bar() </span>&#123;</span><br><span class="line">	<span class="keyword">str </span>= <span class="number">0</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在好了，程序的需求已经得到满足了，但是我们的Bar::foo还没有初始化，但是这里程序员已经显式定义了默认构造函数，所以编译器无法再次合成了，怎么办呢？<br>编译器的做法是：<br><font color="hotpink"><strong>“如果Class A内含有一个或者一个以上的member class object，那么Class A的每一个构造函数都必须调用每一个member class的默认构造函数”*</strong></font>，即编译器会<strong>扩张</strong>已经存在的构造函数，在其中安插一些代码，在user code被执行之前，调用相应的defalut constructor。  </p>
+<pre><code>所以，扩张后的构造函数可能是这样的：　　</code></pre><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Bar::Bar() &#123;</span><br><span class="line">	foo.Foo::Foo();		<span class="comment">// 编译器插入的</span></span><br><span class="line">    <span class="built_in">str</span> = <span class="number">0</span>;			<span class="comment">// 程序员写的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后说一点，如果Bar类有多个member class object怎么办？当然是按上面的道理来，只不过对这些object，<strong><font color="red">按照它们声明的顺序来初始化</font></strong>。</p>
+<h2 id="带有defalut-constructor的base-class"><a href="#带有defalut-constructor的base-class" class="headerlink" title="带有defalut constructor的base class"></a><strong><em>带有defalut constructor的base class</em></strong></h2><p>顾名思义，如果一个没有任何构造函数的继承于一个带有默认构造函数的基类，那么编译器就会<strong><font color="red">为这个类合成一个默认构造函数，这个构造函数会调用上一层继承类的默认构造函数。</font></strong><br>那么如果程序员为这个类写了很多个构造函数，但是就是没有默认构造函数，怎么办？<strong><font color="red">编译器会把默认构造函数中需要的代码插入到所有的现有的构造函数中，那么如果上述第一种情况也存在呢？答案是，这些构造函数会在基类构造函数被调用之后，再被调用。</font></strong></p>
+<h2 id="带有一个virtual-function的class"><a href="#带有一个virtual-function的class" class="headerlink" title="带有一个virtual function的class"></a><strong><em>带有一个virtual function的class</em></strong></h2><p>这个与C++中的虚函数的机制有关，参见<a href="http://mokeeqian.github.io/2019/08/22/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B--%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1/">C++虚函数机制</a>，以下代码为例：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">flip</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">flip</span><span class="params">(<span class="keyword">const</span> Widget &amp; widget)</span> </span>&#123;</span><br><span class="line">	widget.flip();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设Bell和Whistle都是继承于Widget</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Bell b;</span><br><span class="line">    Whistle w;</span><br><span class="line">    flip(b);</span><br><span class="line">    flip(w);-</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一个虚函数表vtbl会在编译的时候被合成出来，用来存放虚函数的地址</li>
+<li>在每一个Widget对象中，都会有一个额外的指针成员vptr，用来存放虚函数表的地址</li>
+</ul>
+<p>此外，widget.flip()的虚拟调用操作会被重新改写，因为flip()在vtbl中是需要通过索引来获得的。可能的代码如下：  </p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(*widget.vptr[1])</span> <span class="comment">(&amp;widget)</span>	<span class="comment">// &amp;widget是this指针</span></span><br></pre></td></tr></table></figure>
+
+<p>至于索引为什么是1？因为vtbl中的第一个元素存放的是<strong>type_info</strong>    </p>
+<p>为了让这个机制有效，编译器必须需要为每一个Widget或其派生类的对象的vptr赋值，放上适当的vtbl的地址。<strong><font color="red">对于class所定义的每一个构造函数，编译器都会插入一些代码来完成这样的事情；对于那些没有定义任何构造函数的class，编译器ｈｉ合成一个这样的默认构造函数，完成对vptr的初始化。</font></strong></p>
+<h2 id="带有一个virtual-base-class的class"><a href="#带有一个virtual-base-class的class" class="headerlink" title="带有一个virtual base class的class"></a><strong><em>带有一个virtual base class的class</em></strong></h2><p>这一条没有弄懂…..</p>
+<h1 id="trivial-无用的-默认构造函数-实际上不存在"><a href="#trivial-无用的-默认构造函数-实际上不存在" class="headerlink" title="trivial(无用的)默认构造函数(实际上不存在)"></a>trivial(无用的)默认构造函数(实际上不存在)</h1><p>不满足上述4种情况、没有显式提供user-defined constructor的时候，这个默认构造函数叫implicit trivial default constructor，实际上<strong>编译器根本不会合成这样的一个构造函数</strong>。</p>
+<h1 id="编译器如何合成默认构造函数"><a href="#编译器如何合成默认构造函数" class="headerlink" title="编译器如何合成默认构造函数"></a>编译器如何合成默认构造函数</h1><p>当程序员没有定义构造函数时，编译器会合成一个默认构造函数，来完成编译器需要的工作；当程序员定义了自己的构造函数时，有时候，编译器也会对它“需要的”一些成员进行操作，这时候，编译器的做法是：<br><strong><font color="red">修改构造函数，在程序员写的构造函数里添加代码，添加的代码位于程序员的代码之前。</font></strong></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>默认构造函数只有在上述4种情况下，才会由编译器强制合成，C++ Standard称之为implicit nontrivial default constructor，它只会满足<strong><font color="red">编译器的需要</font></strong>，其他事一概不会做。</li>
+<li>对那些不满足上述4种情况、没有任何user-defined constructor的类，我们说它拥有的是implicit trivial default constructor，实际上，这个默认构造函数<strong><font color="red">根本不会被合成</font></strong>。</li>
+<li>在合成的默认构造函数中，只有<strong><font color="red">基类的子对象、类的成员对象</font>会</strong>被初始化，所有其他的<strong><font color="red">nonstatic data membe</font>r</strong>(如整数、整数指针、整数数组等)都<strong>不会</strong>被初始化，这些初始化对于程序而言或许很重要，但是编译器它管你干啥子。</li>
+<li>自己的事情自己做，编译器合成出来的构造函数只会做编译器需要做的工作，其他的工作需要程序员自己想办法。</li>
+</ul>
+<h1 id="成员初始化列表-补充说明"><a href="#成员初始化列表-补充说明" class="headerlink" title="成员初始化列表(补充说明)"></a>成员初始化列表(补充说明)</h1><h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p>C++还提供了一种初始化成员的方法：<strong>成员初始化列表</strong><br>何为初始化列表？看个例子：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">float</span> b;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化列表初始化</span></span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">float</span> _b):a(_a),b(_b)</span><br><span class="line">    &#123; &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一般赋值运算符初始化</span></span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">float</span> _b)</span><br><span class="line">    &#123;</span><br><span class="line">    	a = _a;</span><br><span class="line">        b = _b;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如上的<code>Foo(int _a, float _b):a(_a),b(_b) { }</code>就是一个含有列表初始化式的构造函数，观察上述两种初始化的方法，貌似没有区别，真的是这样的吗？<br>首先区别肯定是有的，而且<strong>C++ Primer</strong>中明确提出，有的时候，必须要使用成员初始化列表，否则编译器就会爆出错误！</p>
+<h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><p>初始化列表的本质是什么？<br><br>举个例子：<br></p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Word &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	String <span class="keyword">name</span>;</span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">count</span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Word():<span class="keyword">name</span>(<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="built_in">count</span> = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们猜测一下，这个name是如何被初始化的。<br></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C++伪代码</span></span><br><span class="line">Word::Word(*this)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// String(int) 构造</span></span><br><span class="line">    name.<span class="built_in">String</span>::<span class="built_in">String</span>(<span class="number">0</span>);</span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，0 要被String类的String(int)构造函数来构造成一个String对象，然后才能对name初始化。<br>也就是说，<strong><font color="red">对于成员初始化列表，编译器会将其按照变量声明顺序来处理(也不是绝对的，后面会给出例子)，插入一些代码到构造函数中的任何user-defined code之前。</font></strong></p>
+<h2 id="何时使用"><a href="#何时使用" class="headerlink" title="何时使用"></a>何时使用</h2><p><strong>1. 编译器要求的时候</strong><br><strong>深度探索C++对象模型</strong>中提到，在以下四种情况，对成员的初始化必须要使用成员初始化列表：  </p>
+<ul>
+<li>初始化一个reference member</li>
+<li>初始化一个const member</li>
+<li>调用base class的constructor，而它拥有一组参数  </li>
+<li>调用member class的constructor，而它拥有一组参数  </li>
+</ul>
+<p>下面对以上四种情况给出说明：  </p>
+<h3 id="初始化reference-member"><a href="#初始化reference-member" class="headerlink" title="初始化reference member"></a>初始化reference member</h3><p>我们知道引用一经指定，便不可以再改变，一个引用的成员在声明之后，不可以进行赋值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">int</span> &amp;b;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一般赋值运算符初始化</span></span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b)</span><br><span class="line">    &#123;</span><br><span class="line">    	a = _a;</span><br><span class="line">        b = _b;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Foo <span class="title">foo</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>报错：<br></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span><span class="string">cpp:</span> In constructor ‘<span class="string">Foo:</span>:Foo(<span class="keyword">int</span>, <span class="keyword">int</span>)’:</span><br><span class="line"><span class="number">5.</span><span class="string">cpp:</span><span class="number">9</span>:<span class="number">5</span>: <span class="string">error:</span> uninitialized reference member <span class="keyword">in</span> ‘<span class="keyword">int</span>&amp;’ [-fpermissive]</span><br><span class="line">     Foo(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b)</span><br><span class="line">     ^</span><br><span class="line"><span class="number">5.</span><span class="string">cpp:</span><span class="number">4</span>:<span class="number">10</span>: <span class="string">note:</span> ‘<span class="keyword">int</span>&amp; <span class="string">Foo:</span>:b’ should be initialized</span><br><span class="line">     <span class="keyword">int</span> &amp;b;</span><br><span class="line">          ^</span><br></pre></td></tr></table></figure>
+
+<p>说我Foo::b没有初始化，也就是把b放在构造函数中，不能够正确初始化，那么我们来改一下：<br></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">int</span> &amp;b;</span><br><span class="line">    </span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b):b(_b)</span><br><span class="line">    &#123;</span><br><span class="line">    	a = _a;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Foo <span class="title">foo</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样是没有问题的了。</p>
+<h3 id="初始化const-member"><a href="#初始化const-member" class="headerlink" title="初始化const member"></a>初始化const member</h3><p>为什么const member需要使用成员初始化列表呢？貌似不可理解。<br><br>实际上，const成员在声明后就马上需要初始化，如果放在构造函数中，执行的是赋值操作，这是不允许的。<br><br>我们来试试用构造函数初始化const member：<br><br><strong>TestA.cpp：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> b;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化列表初始化</span></span><br><span class="line">    <span class="comment">//o(int _a, float _b):a(_a),b(_b)</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一般赋值运算符初始化</span></span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">float</span> _b)</span><br><span class="line">    &#123;</span><br><span class="line">    	a = _a;</span><br><span class="line">        b = _b;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Foo <span class="title">foo</span><span class="params">(<span class="number">1</span>, <span class="number">0.1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译报错：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>.cpp: <span class="keyword">In</span> <span class="function"><span class="keyword">constructor</span> ‘<span class="title">Foo</span>:</span>:Foo(int, float)’:</span><br><span class="line"><span class="number">5</span>.cpp:<span class="number">9</span>:<span class="number">5</span>: error: uninitialized <span class="keyword">const</span> member <span class="keyword">in</span> ‘<span class="keyword">const</span> float’ [-fpermissive]</span><br><span class="line">     Foo(int _a, float _b)</span><br><span class="line">     ^</span><br><span class="line"><span class="number">5</span>.cpp:<span class="number">4</span>:<span class="number">17</span>: note: ‘<span class="keyword">const</span> float Foo::b’ should be initialized</span><br><span class="line">     <span class="keyword">const</span> float b;</span><br><span class="line">                 ^</span><br><span class="line"><span class="number">5</span>.cpp:<span class="number">12</span>:<span class="number">11</span>: error: assignment <span class="keyword">of</span> <span class="keyword">read</span>-only member ‘Foo::b’</span><br><span class="line">         b = _b;</span><br><span class="line">           ^</span><br></pre></td></tr></table></figure>
+
+<p>他说，我对只读的成员Foo::b赋值了，如你所见，因为<strong><font color="red">const成员变量一经声明或定义，就不可以在修改，而我们放在构造函数中，进行的是赋值操作，所以编译器会报错。</font></strong>所以const member必须要用成员列表初始化。</p>
+<h3 id="调用base-class的constructor，而它拥有一组参数"><a href="#调用base-class的constructor，而它拥有一组参数" class="headerlink" title="调用base class的constructor，而它拥有一组参数"></a>调用base class的constructor，而它拥有一组参数</h3><p>即: 初始化基类的成员，而且这个基类只有带参数的构造函数，没有无参构造函数<br><br><strong>TestB.cpp</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">float</span> b;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 一般赋值运算符初始化</span></span><br><span class="line">    Foo(<span class="keyword">int</span> _a, <span class="keyword">float</span> _b)</span><br><span class="line">    &#123;</span><br><span class="line">    	a = _a;</span><br><span class="line">        b = _b;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ~Foo()</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span>:</span><span class="keyword">public</span> Foo &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> c;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    Bar(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b, <span class="keyword">int</span> _c):c(_c),Foo(_a,_b)</span><br><span class="line">    &#123; &#125;</span><br><span class="line">    </span><br><span class="line">    ~Bar()</span><br><span class="line">    &#123; &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Bar <span class="title">bar</span><span class="params">(<span class="number">1</span>,<span class="number">2.2</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; bar.a &lt;&lt;<span class="built_in">endl</span> &lt;&lt; bar.b &lt;&lt; <span class="built_in">endl</span> &lt;&lt; bar.c &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：<br></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="调用member-class的constructor，而它拥有一组参数"><a href="#调用member-class的constructor，而它拥有一组参数" class="headerlink" title="调用member class的constructor，而它拥有一组参数"></a>调用member class的constructor，而它拥有一组参数</h3><p>即初始化的是一个类对象成员，而且这个类成员所对应的类只有带参数的构造函数，没有无参的构造函数。<br><br>这一点貌似与上一条类似？</p>
+<p><strong>2. 程序效率要求的时候</strong><br><br>这点先放着，等我搞懂初始化、赋值、定义、声明后在写。</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Word &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	String <span class="keyword">name</span>;</span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">count</span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Word() </span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">name</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">count</span> = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>C++初始化列表的初始化顺序是什么样的呢？<br><br><strong><font color="red">与初始化列表的变量出现顺序无关，而是和变量的声明顺序有关！</font></strong><br><br>但是答案就是绝对的了吗？看个例子：<br></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	X(<span class="keyword">int</span> val)</span><br><span class="line">    	:j(val), i(j)</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里你发现了什么？<br><br><strong>没错！如果按照变量声明的顺序来初始化的话，那么就是先初始化i，在初始化j，那么这个构造函数必定会出错，因为用j来初始化i，此时j还没有被初始化！！！<br><br>所以说，<font color="red">初始化列表的初始化顺序也不是确定的，要视具体情况而定。</font></strong></p>
+
+      
+    </div>
+    
+    
+    
+    
+    
+    
+      <div>
+        
+<div style="text-align:center;color: #000000;font-size:16px;">
+    ------ 本文结束<i class="fa fa-paw"></i>感谢您的阅读 ------</div>
+
+
+      </div>
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qian Jipeng
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://mokeeqian.github.io/C++对象模型-默认构造函数.html" title="C++对象模型--默认构造函数">https://mokeeqian.github.io/C++对象模型-默认构造函数.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/对象模型/" <i class="fa fa-tag"> 对象模型</a>
+          
+            <a href="/tags/默认构造函数/" <i class="fa fa-tag"> 默认构造函数</a>
+          
+            <a href="/tags/初始化列表/" <i class="fa fa-tag"> 初始化列表</a>
+          
+            <a href="/tags/虚函数/" <i class="fa fa-tag"> 虚函数</a>
+          
+            <a href="/tags/虚基类/" <i class="fa fa-tag"> 虚基类</a>
+          
+            <a href="/tags/vtbl/" <i class="fa fa-tag"> vtbl</a>
+          
+            <a href="/tags/vptr/" <i class="fa fa-tag"> vptr</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/CSAPP-一-计算机系统漫游.html" rel="next" title="CSAPP(一)--计算机系统漫游">
+                <i class="fa fa-chevron-left"></i> CSAPP(一)--计算机系统漫游
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/C++对象模型-拷贝构造函数.html" rel="prev" title="C++对象模型--拷贝构造函数">
+                C++对象模型--拷贝构造函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  		<!-- gitalk 评论插件
+      <!-- <div class="comments" id="comments"> -->
+    <div id="gitalk-container"></div>
+    
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Qian Jipeng</p>
+              <p class="site-description motion-element" itemprop="description">Welcome to mokeeqian's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+            
+            
+            <!-- tag 标签云2019.8.23 -->
+			
+			<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+			<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+			<div class="widget-wrap">
+				<h3 class="widget-title">Tag Cloud</h3>
+				<div id="myCanvasContainer" class="widget tagcloud">
+					<canvas width="250" height="250" id="resCanvas" style="width=100%">
+						<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-对象/">C++对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-成员布局/">C++成员布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS/">CS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C语言/">C语言</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python爬虫/">Python爬虫</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sizeof/">sizeof</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/strlen/">strlen</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vptr/">vptr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vtbl/">vtbl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上手教程/">上手教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中缀表达式/">中缀表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存对齐/">内存对齐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数调用/">函数调用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/初始化/">初始化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/初始化列表/">初始化列表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态链接/">动态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/声明/">声明</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习生活/">学习生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/定义/">定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/对象模型/">对象模型</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拷贝构造函数/">拷贝构造函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/指针/">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈/">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/栈帧/">栈帧</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正方教务/">正方教务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浅拷贝/">浅拷贝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深拷贝/">深拷贝</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/约瑟夫问题/">约瑟夫问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性表/">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编译系统/">编译系统</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚函数/">虚函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚基类/">虚基类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机系统/">计算机系统</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评论/">评论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/赋值/">赋值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进制转化/">进制转化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程/">进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆波兰式/">逆波兰式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态链接/">静态链接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认构造函数/">默认构造函数</a><span class="tag-list-count">1</span></li></ul>
+					</canvas>
+				</div>
+			</div>
+			
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mokeeqian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mokeeqian@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认构造函数"><span class="nav-number">2.</span> <span class="nav-text">默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#何谓默认构造函数"><span class="nav-number">3.</span> <span class="nav-text">何谓默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#non-trivial-有用的-默认构造函数"><span class="nav-number">4.</span> <span class="nav-text">non-trivial(有用的)默认构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的member-class-object"><span class="nav-number">4.1.</span> <span class="nav-text">带有defalut constructor的member class object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有defalut-constructor的base-class"><span class="nav-number">4.2.</span> <span class="nav-text">带有defalut constructor的base class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-function的class"><span class="nav-number">4.3.</span> <span class="nav-text">带有一个virtual function的class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带有一个virtual-base-class的class"><span class="nav-number">4.4.</span> <span class="nav-text">带有一个virtual base class的class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trivial-无用的-默认构造函数-实际上不存在"><span class="nav-number">5.</span> <span class="nav-text">trivial(无用的)默认构造函数(实际上不存在)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器如何合成默认构造函数"><span class="nav-number">6.</span> <span class="nav-text">编译器如何合成默认构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#成员初始化列表-补充说明"><span class="nav-number">8.</span> <span class="nav-text">成员初始化列表(补充说明)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识"><span class="nav-number">8.1.</span> <span class="nav-text">初识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本质"><span class="nav-number">8.2.</span> <span class="nav-text">本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时使用"><span class="nav-number">8.3.</span> <span class="nav-text">何时使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化reference-member"><span class="nav-number">8.3.1.</span> <span class="nav-text">初始化reference member</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化const-member"><span class="nav-number">8.3.2.</span> <span class="nav-text">初始化const member</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用base-class的constructor，而它拥有一组参数"><span class="nav-number">8.3.3.</span> <span class="nav-text">调用base class的constructor，而它拥有一组参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用member-class的constructor，而它拥有一组参数"><span class="nav-number">8.3.4.</span> <span class="nav-text">调用member class的constructor，而它拥有一组参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">8.4.</span> <span class="nav-text">注意</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qian Jipeng</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">22.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 不算子访客统计 -->
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	<span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+	<span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- gitalk 评论系统 2019.8.19 -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    const gitalk = new Gitalk({
+      clientID: '909e234c41ceb8d54301',
+      clientSecret: 'bb9bb885ee85617d1cca4243198ab3b19b238c2f',
+      repo: 'hexo-blog-comments',
+      owner: 'mokeeqian',
+      admin: ['mokeeqian'],
+	  id: '<%= page.date %>'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src//love.js"></script>
+
+<!--单击显示文字-->
+<script type="text/javascript" src="/js/src/click_show_text.js"></script>
+
+<!-- 样式二（飘动的彩带） -->
+<script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script>
+
+
+</html>
