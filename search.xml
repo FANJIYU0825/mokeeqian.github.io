@@ -133,9 +133,9 @@
         <category>前端</category>
       </categories>
       <tags>
+        <tag>servlet</tag>
         <tag>web</tag>
         <tag>jsp</tag>
-        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -146,8 +146,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>web</tag>
         <tag>servlet</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -158,8 +158,8 @@
         <category>C++</category>
       </categories>
       <tags>
-        <tag>C++对象</tag>
         <tag>对象模型</tag>
+        <tag>C++对象</tag>
         <tag>指针</tag>
       </tags>
   </entry>
