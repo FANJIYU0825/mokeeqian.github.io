@@ -100,13 +100,13 @@
         <category>C++</category>
       </categories>
       <tags>
+        <tag>对象模型</tag>
         <tag>默认构造函数</tag>
         <tag>初始化列表</tag>
         <tag>虚函数</tag>
         <tag>虚基类</tag>
         <tag>vtbl</tag>
         <tag>vptr</tag>
-        <tag>对象模型</tag>
       </tags>
   </entry>
   <entry>
@@ -144,9 +144,9 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>servlet</tag>
         <tag>web</tag>
         <tag>jsp</tag>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -157,8 +157,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>servlet</tag>
         <tag>web</tag>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -169,8 +169,8 @@
         <category>C++</category>
       </categories>
       <tags>
-        <tag>对象模型</tag>
         <tag>C++对象</tag>
+        <tag>对象模型</tag>
         <tag>指针</tag>
       </tags>
   </entry>
