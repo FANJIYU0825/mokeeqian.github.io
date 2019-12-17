@@ -11,6 +11,6 @@ Disallow: /css/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
-Sitemap: http://www.qianjipeng.top/sitemap.xml
-Sitemap: http://www.qianjipeng.top/baidusitemap.xml
+Sitemap: http://www.lingweiwei.tk/sitemap.xml
+Sitemap: http://www.lingweiwei.tk/baidusitemap.xml
 
