@@ -101,7 +101,7 @@ menu:
   about: /about/ || user
   #guestboard: /guestbook || newspaper-o #自己添加的字段
   #commonweal: /404/ || heartbeat
-  #Love: /love/ || heartbeat
+  #love: /love/ || heartbeat
   
 # Enable/Disable menu icons.
 menu_icons:
@@ -130,8 +130,8 @@ scheme: Pisces
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/mokeeqian || github
-  E-Mail: mailto:mokeeqian@qq.com || envelope
-  #Google: https://plus.google.com/yourname || google
+  E-Mail: mailto:mokeeqian@gmail.com || envelope
+  Google: https://plus.google.com/mokeeqian || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
   #VK Group: https://vk.com/yourname || vk
@@ -594,7 +594,7 @@ busuanzi_count:
 
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true		# yuan false
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
@@ -848,7 +848,16 @@ tag_cloud:
     textColor: '#333'
     textHeight: 25
     outlineColor: '#E2E1D1'
-    maxSpeed: 3.0
+    maxSpeed: 4.0
+
+# 站点地图
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+
+# 站点认证
+baidu_site_verification: YDcDZMWViB
 
 # Assets
 css: css

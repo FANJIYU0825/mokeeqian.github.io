@@ -7,15 +7,16 @@ title: Mokeeqian's Blog
 subtitle:
 description: Welcome to mokeeqian's blog
 keywords: coding
-author: Qian Jipeng
+author: Jipeng Qian
 language: en
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://www.qianjipeng.top
+url: https://www.lingweiwei.tk
 root: /
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+permalink: :title.html
 permalink_defaults:
 
 # Directory
