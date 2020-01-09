@@ -146,13 +146,15 @@ social_icons:
   transition: false
 
 # Blog rolls
+# 友情链接???
 links_icon: link
 links_title: Links
 links_layout: block
 #links_layout: inline
-#links:
-  #Title: http://example.com/
-
+links:
+  #Title: https://blog.csdn.net/lingzniao
+  CSDN: https://blog.csdn.net/lingzniao
+  
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
