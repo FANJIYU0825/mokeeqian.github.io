@@ -159,9 +159,9 @@
         <category>前端</category>
       </categories>
       <tags>
+        <tag>servlet</tag>
         <tag>web</tag>
         <tag>jsp</tag>
-        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -172,8 +172,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>web</tag>
         <tag>servlet</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
